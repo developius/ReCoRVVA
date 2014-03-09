@@ -1,5 +1,4 @@
-#!/usr/bin/python
-#----------------------------------------------------------------------------------------------------------+
+#!/usr/bin/python ---------------------------------------------------------------------------------------------------------+
 #                                               comms.py                                                  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #       Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
