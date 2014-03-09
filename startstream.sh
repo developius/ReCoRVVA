@@ -6,6 +6,9 @@
 #---------------------------------------------------------------------------------------------------------+
 
 sudo killall motion
+sudo killall raspistill
+sudo killall mjpg-streamer
+
 trap '{ echo "Stream stopped!" ; exit 1; }' INT
 echo -e "\ncd-ing to the dir..."
 cd /home/finnian/mjpg-streamer-code-182/mjpg-streamer
