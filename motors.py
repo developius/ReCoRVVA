@@ -36,7 +36,7 @@ def move(d):
 		Sm1 = T
 		Sm2 = F
 		comms.sendToUI("Received Forwards")
-		print colored("Received Forwards", 'blue')
+		print colored("Received Forwards", 'yellow')
 
 	if (d == "B"):
                 Pm1 = F
@@ -44,7 +44,7 @@ def move(d):
                 Sm1 = F
                 Sm2 = T
                 comms.sendToUI("Received Backwards")
-                print colored("Received Backwards", 'blue')
+                print colored("Received Backwards", 'yellow')
 
 	if (d == "L"):
                 Pm1 = F
@@ -52,7 +52,7 @@ def move(d):
                 Sm1 = T
                 Sm2 = F
                 comms.sendToUI("Received Left")
-                print colored("Received Left", 'blue')
+                print colored("Received Left", 'yellow')
 
 	if (d == "R"):
                 Pm1 = F
@@ -60,7 +60,7 @@ def move(d):
                 Sm1 = F
                 Sm2 = F
                 comms.sendToUI("Received Right")
-                print colored("Received Right", 'blue')
+                print colored("Received Right", 'yellow')
 
 	if (d == "Stop"):
                 Pm1 = F
@@ -68,7 +68,7 @@ def move(d):
                 Sm1 = F
                 Sm2 = F
                 comms.sendToUI("Received Stop - Houston, we have a problem!")
-                print colored("Received Stop - Houston, we have a problem!", 'blue')
+                print colored("Received Stop - Houston, we have a problem!", 'yellow')
 
 	else: # just thinking, would this mean that they stop as soon as they've finished executing the motor
 	      # control?!

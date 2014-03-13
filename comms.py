@@ -37,13 +37,14 @@ class Comms (threading.Thread):
 				print colored("Client " + addr + " disconnected", 'red')
 				sendToUI("Goodbye!")
 				iPad("Client " + addr + " disconnected")
-			elif recv_data != "Client connected" or recv_data != "Client connected" or not recv_data in CMDS: # if preset cmds or client con/discon
-				print colored("Received: %s" % recv_data, 'blue') # print out the message
+			if (recv_data in CMDS) == True:
+				motors.move(recv_data)
+				#cam.camera(recv_data)
+ 
+			if recv_data == " ":
+				pass
+
+#			else: # if it's not any of the above, it's something else and we need to know what
+#				print colored("Received: %s" % recv_data, 'blue') # print out the message
 	#                        print colored("Length: %.0f" % len(recv_data), 'blue') # print out the length of the message
-	                        print colored("Sender IP: " + addr, 'blue') # print out the sender's IP
-
-			# check if for cam or motors
-
-			motors.move(recv_data) # send the message to motors for direction checking
-           	        #cam.camera(recv_data) # send the message to camera for pan/tilt
-#                       sendToUI(recv_data) #sends the original message back to UI
+#	                        print colored("Sender IP: " + addr, 'blue') # print out the sender's IP
