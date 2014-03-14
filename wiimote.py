@@ -1,15 +1,14 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               wiimote.py                                                |
-# Gets the data from a Wii mote and sends it via a Python socket to the ReCoRVVA
+# Gets the data from a Wii mote and sends it via a Python socket to the ReCoRVVA			  |
 # (c) 2014 B. James (ben@fxapi.co.uk)                                                                     |
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
 
-# but where did you get cwiid from?!
+# but where did you get cwiid from?! needs linkage for it or people won't know where to go for it.
 
-import cwiid
-import time
+import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe
 
 button_delay = 0.25
 
@@ -21,7 +20,7 @@ try:
   wm = cwiid.Wiimote()
 except RuntimeError:
   print "Couldn't find wii remote"
-  quit()
+  quit() #where is this defined? And do you actually ever get a error? Say start it with Wiimote not near- xavbabe
 
 #turn on led to show connected
 wm.led = 1
