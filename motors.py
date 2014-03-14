@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #						motors.py						  |
+# Drives the motors
 # (c) 2014 A. Ledesma (monkeeyman@hotmail.co.uk)                                                          |
 #       Thanks for contribution to B. James (benji@fxapi.co.uk) and F. Anderson (finnian@fxapi.co.uk)	  |
 #---------------------------------------------------------------------------------------------------------+
@@ -17,7 +18,8 @@ PmPin2 = 12
 SmPin1 = 3
 SmPin2 = 5
 
-def turn():
+def drive():
+	print(Pm1,Pm2,Sm1,Sm2)
         GPIO.output(PmPin1, Pm1)
         GPIO.output(PmPin2, Pm2)
         GPIO.output(SmPin1, Sm1)
@@ -30,7 +32,7 @@ def move(d):
 		Sm1 = " "
 		Sm2 = " "
 
-	if (d == "F"):
+	if (d == "F") or (d == "W"):
 		Pm1 = T
 		Pm2 = F
 		Sm1 = T
@@ -38,7 +40,7 @@ def move(d):
 		comms.sendToUI("Received Forwards")
 		print colored("Received Forwards", 'yellow')
 
-	if (d == "B"):
+	if (d == "B") or (d == "X"):
                 Pm1 = F
                 Pm2 = T
                 Sm1 = F
@@ -46,7 +48,7 @@ def move(d):
                 comms.sendToUI("Received Backwards")
                 print colored("Received Backwards", 'yellow')
 
-	if (d == "L"):
+	if (d == "L") or (d == "A"):
                 Pm1 = F
                 Pm2 = F
                 Sm1 = T
@@ -54,7 +56,7 @@ def move(d):
                 comms.sendToUI("Received Left")
                 print colored("Received Left", 'yellow')
 
-	if (d == "R"):
+	if (d == "R") or (d == "D"):
                 Pm1 = F
                 Pm2 = T
                 Sm1 = F
@@ -62,7 +64,7 @@ def move(d):
                 comms.sendToUI("Received Right")
                 print colored("Received Right", 'yellow')
 
-	if (d == "Stop"):
+	if (d == "Stop") or (d == "S"):
                 Pm1 = F
                 Pm2 = F
                 Sm1 = F
@@ -78,6 +80,6 @@ def move(d):
                 Sm2 = F
 
 	return (Pm1,Pm2,Sm1,Sm2)
-	turn()
+	drive()
 
 #move(1)

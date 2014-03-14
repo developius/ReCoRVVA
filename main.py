@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #						main.py							  |
+# Hamdles the multithreading and the other scripts
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)								  |
 #	Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
 #---------------------------------------------------------------------------------------------------------+
@@ -9,8 +10,7 @@
 from termcolor import colored
 import socket, threading, os, time, math
 import RPi.GPIO as GPIO
-import os
-import ping, motors, comms
+import ping, motors, comms, cam
 
 # Setup the GPIOs
 GPIO.setmode(GPIO.BOARD)
@@ -26,21 +26,12 @@ GPIO.setup(5,GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 
-#Setup the Pan/Tilt Servos
-servoNeutral = 7.5
-servoRight = 12.5
-servoLeft = 2.5
-pan = GPIO.PWM(24,50)
-tilt = GPIO.PWM(26,50)
-pan.start(7.5)
-tilt.start(7.5)
-
 print colored("Robot ping and control script, written in Python", 'magenta')
 print colored("Let\'s drive!", 'magenta')
 print(" ")
 
 #Start the camera feed
-os.system('./startstream.sh &> /dev/null')
+cam.camera("on")
 
 print colored("Leaving time for camera warmup, please wait", 'red')
 time.sleep(2)

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               ping.py                                                   |
+# Gets the ping from an ultrasonic sensor								  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #       Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
 #---------------------------------------------------------------------------------------------------------+
