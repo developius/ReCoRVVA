@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               wiimote.py                                                |
+# Gets the data from a Wii mote and sends it via a Python socket to the ReCoRVVA
 # (c) 2014 B. James (ben@fxapi.co.uk)                                                                     |
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
