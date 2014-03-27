@@ -10,7 +10,7 @@ from socket import *
 import sys, select, threading, motors, cam
 from termcolor import colored
 
-address = ('0.0.0.0', 8888)
+address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
 server_socket.bind(address)
 
