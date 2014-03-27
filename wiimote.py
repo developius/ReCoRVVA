@@ -12,6 +12,8 @@ import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe 
 #I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
 #the functions come from.
 
+recorvva.connect() #connect to python socket 
+
 button_delay = 0.25
 
 print "Press 1 + 2 on your Wii Remote now ..."
@@ -25,8 +27,6 @@ except RuntimeError:
   quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
   #from the quit() function and the "couoldn't find wii remote" message.
     
-#recorvva.connect() #connect to python socket  
-
 #turn on led to show connected
 wm.led = 1
 
