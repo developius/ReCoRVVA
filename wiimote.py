@@ -21,7 +21,8 @@ try:
   wm = cwiid.Wiimote()
 except RuntimeError:
   print "Couldn't find wii remote"
-  quit() #where is this defined? And do you actually ever get a error? Say start it with Wiimote not near- xavbabe
+  quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
+  #from the quit() function and the "couoldn't find wii remote" message.
   
 connect() #connect to python socket  
 
