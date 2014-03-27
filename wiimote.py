@@ -22,6 +22,8 @@ try:
 except RuntimeError:
   print "Couldn't find wii remote"
   quit() #where is this defined? And do you actually ever get a error? Say start it with Wiimote not near- xavbabe
+  
+connect() #connect to python socket  
 
 #turn on led to show connected
 wm.led = 1
@@ -30,8 +32,6 @@ wm.led = 1
 wm.rumble = 1
 time.sleep(1)
 wm.rumble = 0
-
-
 
 
 print 'Wii Remote connected...\n'
