@@ -25,7 +25,7 @@ except RuntimeError:
   quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
   #from the quit() function and the "couoldn't find wii remote" message.
     
-recorvva.connect() #connect to python socket  
+#recorvva.connect() #connect to python socket  
 
 #turn on led to show connected
 wm.led = 1
