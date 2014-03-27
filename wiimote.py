@@ -8,8 +8,9 @@
 
 #Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid
 
-import cwiid, time # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
-from recorvva import *
+import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
+#I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
+#the functions come from.
 
 button_delay = 0.25
 
@@ -24,7 +25,7 @@ except RuntimeError:
   quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
   #from the quit() function and the "couoldn't find wii remote" message.
   
-connect() #connect to python socket  
+recorvva.connect() #connect to python socket  
 
 #turn on led to show connected
 wm.led = 1
@@ -75,6 +76,7 @@ while True:
     time.sleep(1)
     wm.rumble = 0
     exit(wm)
+    close()
 
   if (buttons & cwiid.BTN_LEFT):
     print 'Left pressed'
