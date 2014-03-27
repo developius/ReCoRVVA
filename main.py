@@ -38,5 +38,6 @@ time.sleep(2)
 
 #Start Ping thread and Communication threads
 print colored("Waiting for client connection...", 'yellow')
+
 comms.Comms().start()
 ping.Ping().start()

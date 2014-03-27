@@ -11,6 +11,7 @@ import threading, time, comms, motors, socket
 from termcolor import colored
 from collections import deque
 import RPi.GPIO as GPIO
+from random import randrange
 
 last3 = deque(maxlen=3)
 
@@ -37,6 +38,10 @@ class Ping (threading.Thread):
 
 			last3.append(distance)
 			avg = sum(last3) / len(last3)
+
+			file = open('/var/www/crest/pingfile.txt', 'w')
+       			file.write(avg)
+		        file.close()
 
                         if distance >= 10 or avg >= 10:
                                 print colored("No obstructions: %.1f" % distance4term + "cms", 'green')
