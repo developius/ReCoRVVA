@@ -24,7 +24,7 @@ except RuntimeError:
   print "Couldn't find wii remote"
   quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
   #from the quit() function and the "couoldn't find wii remote" message.
-  
+    
 recorvva.connect() #connect to python socket  
 
 #turn on led to show connected
@@ -54,9 +54,9 @@ while True:
   #accelerometer reading increases as Wiimote tilts left and decreases as it's tilting right. Neutral is 125.
   #print acceleromter
   if(accelerometer[1] > 130):
-   if(tilt_status != 'left'):
-     print 'turning left'
-     tilt_status = 'left'
+    if(tilt_status != 'left'):
+       print 'turning left'
+       tilt_status = 'left'
 
   elif(accelerometer[1] < 110):
     if(tilt_status != 'right'):
