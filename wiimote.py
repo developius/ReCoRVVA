@@ -8,7 +8,8 @@
 
 #Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid
 
-import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe
+import cwiid, time # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
+from recorvva import *
 
 button_delay = 0.25
 
