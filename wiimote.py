@@ -6,7 +6,7 @@
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
 
-# but where did you get cwiid from?! needs linkage for it or people won't know where to go for it.
+#Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid
 
 import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe
 
