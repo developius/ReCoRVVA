@@ -46,21 +46,29 @@ def commands():
 	print colored("HL		Turn headlights off", 'blue')
 
 def connect():
-	print colored("Connecting to ReCoRVVA", 'blue')
-	client_socket.connect(address)
-	client_socket.sendto("Client connected", address)
-	client_socket.sendto(" ", address)
+	try:
+		client_socket.connect(address)
+		client_socket.sendto("Client connected", address)
+		client_socket.sendto(" ", address)
+		print colored("Connected to ReCoRVVA", 'blue')
+	except error:
+		print colored("Could not connect to ReCoRVVA", 'blue')
+		sys.exit(1)
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
-	send_msg("Client disconnected", address)
+	send_msg("Client disconnected")
 	stop_data()
 	client_socket.close()
 
 def send_msg(msg):
-	print colored("Sending '%s' to ReCoRVVA" % msg, 'green')
-	client_socket.sendto(msg, address)
-	client_socket.sendto(" ", address) #need to send two things for it to work
+	try:
+		client_socket.sendto(msg, address)
+		client_socket.sendto(" ", address) #need to send two things for it to work
+		print colored("Sent '%s' to ReCoRVVA" % msg, 'green')
+	except error:
+		print colored("Could not send message", 'blue')
+		sys.exit(1)
 
 def get_data():
 	data_thread().start()
