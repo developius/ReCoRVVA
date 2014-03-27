@@ -56,17 +56,19 @@ while True:
   if(accelerometer[1] > 130):
     if(tilt_status != 'left'):
        print 'turning left'
-       recorvva.send_msg(
+       recorvva.send_msg("turn left")
        tilt_status = 'left'
 
   elif(accelerometer[1] < 110):
     if(tilt_status != 'right'):
       print 'turning right'
+      recorvva.send_msg("turn right")
       tilt_status = 'right'
 
   elif(accelerometer[1] <= 130 & accelerometer[1] >= 110):
     if(tilt_status != 'neutral'):
       print 'steering straight'
+      recorvva.send_msg("steer straight")
       tilt_status = 'neutral'
 
   # If Plus and Minus buttons pressed
@@ -77,6 +79,7 @@ while True:
     time.sleep(1)
     wm.rumble = 0
     exit(wm)
+    recorvva.send_msg("The PLUS and MINUS buttons on the wiimote have been pressed, about to close connection")
     close()
 
   if (buttons & cwiid.BTN_LEFT):
