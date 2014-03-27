@@ -56,6 +56,7 @@ while True:
   if(accelerometer[1] > 130):
     if(tilt_status != 'left'):
        print 'turning left'
+       recorvva.send_msg(
        tilt_status = 'left'
 
   elif(accelerometer[1] < 110):
