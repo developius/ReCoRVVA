@@ -83,19 +83,23 @@ while True:
     close()
 
   if (buttons & cwiid.BTN_LEFT):
-    print 'Left pressed'
+    print 'down pressed'
+    recorvva.send_msg("down pressed")
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
-    print 'Right pressed'
+    print 'up pressed'
+    recorvva.send_msg("up pressed")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_UP):
-    print 'Up pressed'
+    print 'left pressed'
+    recorvva.send_msg("left pressed")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
-    print 'Down pressed'
+    print 'right pressed'
+    recorvva.send_msg("right pressed")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_1):
