@@ -53,7 +53,7 @@ def connect():
 		print colored("Connected to ReCoRVVA", 'blue')
 	except error:
 		print colored("Could not connect to ReCoRVVA", 'blue')
-		sys.exit(1)
+#		sys.exit(1)
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
@@ -68,7 +68,7 @@ def send_msg(msg):
 		print colored("Sent '%s' to ReCoRVVA" % msg, 'green')
 	except error:
 		print colored("Could not send message", 'blue')
-		sys.exit(1)
+#		sys.exit(1)
 
 def get_data():
 	data_thread().start()
@@ -79,5 +79,8 @@ def stop_data():
 class data_thread (threading.Thread):
         def run (self):
 		while True:
-			recv_data, addr = client_socket.recvfrom(2048)
-			print colored("\n<SERVER> " + recv_data, 'red')
+			try:
+				recv_data, addr = client_socket.recvfrom(2048)
+				print colored("\n<SERVER> " + recv_data, 'red')
+			except error:
+				print colored("Could not get data", 'blue')
