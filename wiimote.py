@@ -12,7 +12,7 @@ import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe 
 #I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
 #the functions come from.
 
-
+recorvva.connect()
 
 button_delay = 0.25
 
@@ -80,8 +80,8 @@ while True:
     time.sleep(1)
     wm.rumble = 0
     exit(wm)
-    recorvva.send_msg("The PLUS and MINUS buttons on the wiimote have been pressed, about to close connection")
-    recorvva.close()
+    recorvva.send_msg("Couldn't find a wiimote")
+#    recorvva.close() DONT DO THIS OR YOU CANT RECONNECT!!!!
 
   if (buttons & cwiid.BTN_LEFT):
     print 'down pressed'
@@ -127,6 +127,3 @@ while True:
     print 'Connecting'
     recorvva.connect()
     time.sleep(button_delay)
-
-  
-  
