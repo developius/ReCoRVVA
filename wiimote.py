@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               wiimote.py                                                |
-# Gets the data from a Wii mote and sends it via a Python socket to the ReCoRVVA			  |
+# Gets the data from a Wiimote and sends it via a Python socket to the ReCoRVVA			          |
 # (c) 2014 B. James (ben@fxapi.co.uk)                                                                     |
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
@@ -25,7 +25,7 @@ try:
 except RuntimeError:
   print "Couldn't find wii remote"
   quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
-  #from the quit() function and the "couoldn't find wii remote" message.
+  #from the quit() function and the "couldn't find wii remote" message.
     
 #turn on led to show connected
 wm.led = 1
@@ -84,22 +84,22 @@ while True:
 
   if (buttons & cwiid.BTN_LEFT):
     print 'down pressed'
-    recorvva.send_msg("down pressed")
+    recorvva.send_msg("camera down")
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
     print 'up pressed'
-    recorvva.send_msg("up pressed")
+    recorvva.send_msg("camera up ")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_UP):
     print 'left pressed'
-    recorvva.send_msg("left pressed")
+    recorvva.send_msg("camera left")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
     print 'right pressed'
-    recorvva.send_msg("right pressed")
+    recorvva.send_msg("camera right")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_1):
