@@ -10,7 +10,7 @@ from time import sleep
 from termcolor import colored
 import sys, threading
 
-address = ('fxapi', 7777)
+address = ('25.110.219.165', 7777)
 client_socket = socket(AF_INET, SOCK_DGRAM)
 
 def help():
