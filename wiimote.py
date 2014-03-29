@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               wiimote.py                                                |
-# Gets the data from a Wiimote and sends it via a Python socket to the ReCoRVVA			          |
+# Gets the data from a Wiimote and sends it via a Python socket to the ReCCoRVVA			          |
 # (c) 2014 B. James (ben@fxapi.co.uk)                                                                     |
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
@@ -24,6 +24,7 @@ try:
   wm = cwiid.Wiimote()
 except RuntimeError:
   print "Couldn't find wii remote"
+  recorvva.close()
   quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
   #from the quit() function and the "couldn't find wii remote" message.
     
@@ -80,7 +81,7 @@ while True:
     wm.rumble = 0
     exit(wm)
     recorvva.send_msg("The PLUS and MINUS buttons on the wiimote have been pressed, about to close connection")
-    close()
+    recorvva.close()
 
   if (buttons & cwiid.BTN_LEFT):
     print 'down pressed'
