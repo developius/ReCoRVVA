@@ -80,7 +80,7 @@ while True:
     time.sleep(1)
     wm.rumble = 0
     exit(wm)
-    recorvva.send_msg("The PLUS and MINUS buttons on the wiimote have been pressed, about to close connection")
+    recorvva.send_msg("Couldn't find a wiimote")
 #    recorvva.close() DONT DO THIS OR YOU CANT RECONNECT!!!!
 
   if (buttons & cwiid.BTN_LEFT):
