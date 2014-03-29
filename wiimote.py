@@ -12,7 +12,7 @@ import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe 
 #I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
 #the functions come from.
 
-
+recorvva.connect()
 
 button_delay = 0.25
 
@@ -123,10 +123,10 @@ while True:
     recorvva.send_msg("stop")
     time.sleep(button_delay)
 
-  if (buttons & cwiid.BTN_PLUS):
-    print 'Connecting'
-    recorvva.connect()
-    time.sleep(button_delay)
+  #if (buttons & cwiid.BTN_PLUS):
+   # print 'Connecting' # am trying to put itearlier in script
+   # recorvva.connect()
+    #time.sleep(button_delay)
 
   
   

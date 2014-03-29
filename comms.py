@@ -31,6 +31,7 @@ class Comms (threading.Thread):
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
 			addr = str(addr)
+			print recv_data
 			if recv_data == "Client connected" :
 				print colored("Client " + addr + " connected", 'red')
 				sendToUI("Welcome!")
