@@ -110,15 +110,15 @@ while True:
 
   if (buttons & cwiid.BTN_2):
     print 'Button 2 pressed'
-    recorvva.send _msg("go forwards")
+    recorvva.send_msg("go forwards")
     time.sleep(button_delay)
     
   if (buttons & cwiid.BTN_A):
     print 'Button A pressed'
-    recorvva.send _msg("headlights")
+    recorvva.send_msg("headlights")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
     print 'Button B pressed'
-    recorvva.send _msg("stop")
+    recorvva.send_msg("stop")
     time.sleep(button_delay)
