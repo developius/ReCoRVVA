@@ -81,7 +81,7 @@ while True:
     wm.rumble = 0
     exit(wm)
     recorvva.send_msg("The PLUS and MINUS buttons on the wiimote have been pressed, about to close connection")
-    recorvva.close()
+#    recorvva.close() DONT DO THIS OR YOU CANT RECONNECT!!!!
 
   if (buttons & cwiid.BTN_LEFT):
     print 'down pressed'
@@ -123,10 +123,7 @@ while True:
     recorvva.send_msg("stop")
     time.sleep(button_delay)
 
-  #if (buttons & cwiid.BTN_PLUS):
-   # print 'Connecting' # am trying to put itearlier in script
-   # recorvva.connect()
-    #time.sleep(button_delay)
-
-  
-  
+  if (buttons & cwiid.BTN_PLUS):
+    print 'Connecting'
+    recorvva.connect()
+    time.sleep(button_delay)
