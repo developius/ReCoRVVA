@@ -48,8 +48,7 @@ def commands():
 def connect():
 	try:
 		client_socket.connect(address)
-		client_socket.sendto("Client connected", address)
-		client_socket.sendto(" ", address)
+		send_msg("Client connected", address)
 		print colored("Connected to ReCoRVVA", 'blue')
 	except error:
 		print colored("Could not connect to ReCoRVVA", 'blue')
