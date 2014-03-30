@@ -13,21 +13,25 @@ from collections import deque
 import RPi.GPIO as GPIO
 from random import randrange
 
+trig = 26 # gpio 7
+echo = 24 # gpio 8
+
 last3 = deque(maxlen=3)
 
 class Ping (threading.Thread):
         def run (self):
 		print colored("Sending ping to iPad only", 'green')
                 while True:
-			GPIO.output(7,GPIO.LOW)
-                        time.sleep(1)
-                        GPIO.output(7,True)
+			GPIO.output(trig,GPIO.LOW)
+                        print "sleeping in ping"
+			time.sleep(1)
+                        GPIO.output(trig,True)
                         time.sleep(0.00001)
-                        GPIO.output(7,False)
-                        while GPIO.input(8) == 0:
+                        GPIO.output(trig,False)
+                        while GPIO.input(echo) == 0:
                                 signaloff = time.time()
-
-                        while GPIO.input(8) == 1:
+			print "timer finished"
+                        while GPIO.input(echo) == 1:
                                 signalon = time.time()
 
                         timepassed = signalon - signaloff

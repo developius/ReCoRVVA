@@ -57,19 +57,19 @@ while True:
   if(accelerometer[1] > 130):
     if(tilt_status != 'left'):
        print 'turning left'
-       recorvva.send_msg("turn left")
+       recorvva.send_msg("L")
        tilt_status = 'left'
 
   elif(accelerometer[1] < 110):
     if(tilt_status != 'right'):
       print 'turning right'
-      recorvva.send_msg("turn right")
+      recorvva.send_msg("R")
       tilt_status = 'right'
 
   elif(accelerometer[1] <= 130 & accelerometer[1] >= 110):
     if(tilt_status != 'neutral'):
       print 'steering straight'
-      recorvva.send_msg("steer straight")
+      recorvva.send_msg("F")
       tilt_status = 'neutral'
 
   # If Plus and Minus buttons pressed
@@ -85,42 +85,42 @@ while True:
 
   if (buttons & cwiid.BTN_LEFT):
     print 'down pressed'
-    recorvva.send_msg("camera down")
+    recorvva.send_msg("tilt_down")
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
     print 'up pressed'
-    recorvva.send_msg("camera up ")
+    recorvva.send_msg("tilt_up")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_UP):
     print 'left pressed'
-    recorvva.send_msg("camera left")
+    recorvva.send_msg("pan_left")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
     print 'right pressed'
-    recorvva.send_msg("camera right")
+    recorvva.send_msg("pan_right")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_1):
     print 'Button 1 pressed'
-    recorvva.send_msg("Go backwards")
+    recorvva.send_msg("B")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_2):
     print 'Button 2 pressed'
-    recorvva.send_msg("go forwards")
+    recorvva.send_msg("go forwards") # basically this is what steer straight is
     time.sleep(button_delay)
     
   if (buttons & cwiid.BTN_A):
     print 'Button A pressed'
-    recorvva.send_msg("headlights")
+    recorvva.send_msg("HH") # headlights HIGH
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
     print 'Button B pressed'
-    recorvva.send_msg("stop")
+    recorvva.send_msg("S")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_PLUS):
