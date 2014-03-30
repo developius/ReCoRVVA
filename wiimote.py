@@ -110,7 +110,7 @@ while True:
 
   if (buttons & cwiid.BTN_2):
     print 'Button 2 pressed'
-    recorvva.send_msg("go forwards") # basically this is what steer straight is
+    recorvva.send_msg("go forwards") # basically this is what steer straight is - Xav  No. Because you still have to be going forwards to turn -Ben 
     time.sleep(button_delay)
     
   if (buttons & cwiid.BTN_A):
