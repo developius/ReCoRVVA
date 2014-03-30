@@ -22,12 +22,12 @@ class Ping (threading.Thread):
         def run (self):
 		print colored("Sending ping to iPad only", 'green')
                 while True:
-			GPIO.output(trig,GPIO.LOW)
+			GPIO.output(trig, False)
                         print "sleeping in ping"
 			time.sleep(1)
-                        GPIO.output(trig,True)
+                        GPIO.output(trig, True)
                         time.sleep(0.00001)
-                        GPIO.output(trig,False)
+                        GPIO.output(trig, False)
                         while GPIO.input(echo) == 0:
                                 signaloff = time.time()
 			print "timer finished"
