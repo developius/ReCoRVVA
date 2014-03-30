@@ -48,7 +48,7 @@ def commands():
 def connect():
 	try:
 		client_socket.connect(address)
-		send_msg("Client connected", address)
+		send_msg("Client connected")
 		print colored("Connected to ReCoRVVA", 'blue')
 	except error:
 		print colored("Could not connect to ReCoRVVA", 'blue')
@@ -83,10 +83,3 @@ class data_thread (threading.Thread):
 				print colored("\n<SERVER> " + recv_data, 'red')
 			except error:
 				print colored("Could not get data", 'blue')
-
-connect()
-
-while True:
-	data = raw_input("<CONSOLE>: ")
-	print data
-	send_msg(data)
