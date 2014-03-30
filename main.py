@@ -14,7 +14,7 @@ import ping, motors, comms, cam
 
 # Setup the GPIOs
 GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+GPIO.setwarnings(True)
 GPIO.setup(7,GPIO.OUT)
 GPIO.setup(8,GPIO.IN)
 GPIO.setup(11,GPIO.OUT)
@@ -27,8 +27,7 @@ GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 
 print colored("Robot ping and control script, written in Python", 'magenta')
-print colored("Let\'s drive!", 'magenta')
-print(" ")
+print colored("Let\'s drive!\n", 'magenta')
 
 #Start the camera feed
 cam.camera("on")
@@ -40,4 +39,5 @@ time.sleep(2)
 print colored("Waiting for client connection...", 'yellow')
 
 comms.Comms().start()
+print "starting ping"
 ping.Ping().start()
