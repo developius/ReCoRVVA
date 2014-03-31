@@ -69,7 +69,7 @@ while True:
   elif(accelerometer[1] <= 130 & accelerometer[1] >= 110):
     if(tilt_status != 'neutral'):
       print 'steering straight'
-      recorvva.send_msg("F")
+      recorvva.send_msg("N")
       tilt_status = 'neutral'
 
   # If Plus and Minus buttons pressed
@@ -81,7 +81,6 @@ while True:
     wm.rumble = 0
     exit(wm)
     recorvva.send_msg("Couldn't find a wiimote")
-#    recorvva.close() DONT DO THIS OR YOU CANT RECONNECT!!!!
 
   if (buttons & cwiid.BTN_LEFT):
     print 'down pressed'
@@ -110,7 +109,7 @@ while True:
 
   if (buttons & cwiid.BTN_2):
     print 'Button 2 pressed'
-    recorvva.send_msg("go forwards") # basically this is what steer straight is - Xav  No. Because you still have to be going forwards to turn -Ben 
+    recorvva.send_msg("F") 
     time.sleep(button_delay)
     
   if (buttons & cwiid.BTN_A):
