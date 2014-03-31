@@ -6,7 +6,7 @@
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
 
-#Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid
+#Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid 
 
 import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
 #I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
