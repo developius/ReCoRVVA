@@ -8,9 +8,11 @@
 
 #Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid 
 
-import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
-#I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
-#the functions come from.
+#import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
+import recorvva
+recorvva.help()
+print("---")
+recorvva.commands()
 
 recorvva.connect()
 
@@ -35,7 +37,6 @@ wm.led = 1
 wm.rumble = 1
 time.sleep(1)
 wm.rumble = 0
-
 
 print("Wii Remote connected...\n")
 print("Press some buttons!\n")
