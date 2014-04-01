@@ -14,9 +14,6 @@ recorvva.help()
 print("---")
 recorvva.commands()
 
-#I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
-#the functions come from.
-
 recorvva.connect()
 
 button_delay = 0.25
