@@ -104,7 +104,3 @@ class data_thread (threading.Thread):
 				print colored("\n<SERVER> " + recv_data, 'red')
 			except error:
 				print colored("Could not get data", 'blue')
-
-#close()
-connect()
-send_msg("test")
