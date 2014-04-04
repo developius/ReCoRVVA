@@ -114,9 +114,14 @@ while True:
     time.sleep(button_delay)
     
   if (buttons & cwiid.BTN_A):
-    print("Button A pressed")
-    recorvva.send_msg("HH") # headlights HIGH
-    time.sleep(button_delay)
+    if (ledStatus == True):
+      print("turning  headlights off")
+      recorvva.send_msg("HL") # headlights HIGH
+      time.sleep(button_delay)
+   else
+      print("turning headlights on")
+      recorvva.send_msg("HH") #headlights HIGH
+      time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
     print("Button B pressed")
