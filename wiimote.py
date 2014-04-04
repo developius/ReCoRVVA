@@ -120,7 +120,7 @@ while True:
       print("turning  headlights off")
       recorvva.send_msg("HH") # headlights HIGH
       time.sleep(button_delay)
-   else:
+  else:
       print("turning headlights on")
       recorvva.send_msg("HLx") #headlights HIGH
       time.sleep(button_delay)
