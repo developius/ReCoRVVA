@@ -8,11 +8,11 @@
 
 #Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid 
 
-#import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
-import recorvva
-recorvva.help()
-print("---")
-recorvva.commands()
+import cwiid, time, recorvva
+
+#recorvva.help()
+#print("---")
+#recorvva.commands()
 
 recorvva.connect()
 

@@ -39,5 +39,5 @@ time.sleep(2)
 print colored("Waiting for client connection...", 'yellow')
 
 comms.Comms().start()
-print "starting ping"
-ping.Ping().start()
+#print "starting ping"
+#ping.Ping().start()
