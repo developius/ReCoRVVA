@@ -18,6 +18,8 @@ recorvva.connect()
 
 button_delay = 0.25
 
+ledStatus = False
+
 print("Press 1 + 2 on your Wii Remote now ...")
 time.sleep(1)
 
@@ -116,11 +118,11 @@ while True:
   if (buttons & cwiid.BTN_A):
     if (ledStatus == True):
       print("turning  headlights off")
-      recorvva.send_msg("HL") # headlights HIGH
+      recorvva.send_msg("HH") # headlights HIGH
       time.sleep(button_delay)
-   else
+   else:
       print("turning headlights on")
-      recorvva.send_msg("HH") #headlights HIGH
+      recorvva.send_msg("HLx") #headlights HIGH
       time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
