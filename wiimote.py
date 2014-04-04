@@ -119,13 +119,13 @@ while True:
     if (ledStatus == True):
       print("turning  headlights off")
       recorvva.send_msg("HH") # headlights HIGH
-      ledStatus = ! ledStatus
+      ledStatus =! ledStatus
       time.sleep(button_delay)
 
     else:
       print("turning headlights on")
       recorvva.send_msg("HL") #headlights HIGH
-      ledStatus = ! ledStatus
+      ledStatus =! ledStatus
       time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
