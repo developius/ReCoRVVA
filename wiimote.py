@@ -122,7 +122,7 @@ while True:
       time.sleep(button_delay)
     else:
       print("turning headlights on")
-      recorvva.send_msg("HLx") #headlights HIGH
+      recorvva.send_msg("HL") #headlights HIGH
       time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
