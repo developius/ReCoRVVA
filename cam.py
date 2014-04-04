@@ -16,7 +16,7 @@ servoDown = servoLeft = 2.5
 #tilt = GPIO.PWM(26,50)
 #pan.start(servoNeutral)
 #tilt.start(servoNeutral)
-headlights = "pinNumber"
+headlights = 7
 
 def camera(status):
 	if status == "CamOn":
@@ -28,12 +28,12 @@ def camera(status):
 	
 	if status == "HL":
 		print colored("Switching off headlights", 'yellow')
-#		GPIO.output(headlights, LOW)
+		GPIO.output(headlights, LOW)
 		comms.sendToUI("Headlights off")
 
 	if status == "HH":
 		print colored("Switching on headlights", 'yellow')
-#		GPIO.output(headlights, HIGH)
+		GPIO.output(headlights, HIGH)
 		comms.sendToUI("Headlights on")
 
 def servo(direction):
