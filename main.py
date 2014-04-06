@@ -23,9 +23,6 @@ GPIO.setup(12,GPIO.OUT)
 GPIO.setup(3,GPIO.OUT)
 GPIO.setup(5,GPIO.OUT)
 
-GPIO.setup(24, GPIO.OUT)
-GPIO.setup(26, GPIO.OUT)
-
 print colored("Robot ping and control script, written in Python", 'magenta')
 print colored("Let\'s drive!\n", 'magenta')
 
@@ -39,5 +36,4 @@ time.sleep(2)
 print colored("Waiting for client connection...", 'yellow')
 
 comms.Comms().start()
-#print "starting ping"
-#ping.Ping().start()
+ping.Ping().start()
