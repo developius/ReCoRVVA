@@ -10,7 +10,12 @@ from time import sleep
 from termcolor import colored
 import sys, threading
 
-address = ('25.110.219.165', 7777)
+port = 7777
+vpn = ("25.110.219.165", port)
+fxapi = ("fxapi", port)
+fxapi2 = ("fxapi.local", port)
+address = 0
+
 client_socket = socket(AF_INET, SOCK_DGRAM)
 
 def help():
@@ -47,12 +52,28 @@ def commands():
 
 def connect():
 	try:
-		client_socket.connect(address)
-		send_msg("Client connected")
-		print colored("Connected to ReCoRVVA", 'blue')
+		client_socket.connect(vpn)
+		global address
+		client_socket.sendto("Client connected", vpn)
+		print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+		address = vpn
 	except error:
-		print colored("Could not connect to ReCoRVVA", 'blue')
-#		sys.exit(1)
+		print "vpn ip failed"
+		try:
+	                client_socket.connect(fxapi)
+        	        client_socket.sendto("Client connected", fxapi)
+       		        print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+			address = fxapi
+		except error:
+			print "fxapi as address failed"
+			try:
+		                client_socket.connect(fxapi2)
+		                client_socket.sendto("Client connected", fxapi2)
+		                print colored("Connected to ReCoRVVA on " + str(fxapi2), 'blue')
+				address = fxapi2
+			except error:
+				print "fxapi.local as address failed"
+				print colored("Could not connect to ReCoRVVA",'blue')
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')

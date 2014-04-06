@@ -31,7 +31,6 @@ class Comms (threading.Thread):
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
 			addr = str(addr)
-			print recv_data
 			if recv_data == "Client connected" :
 				print colored("Client " + addr + " connected", 'red')
 				sendToUI("Welcome!")
@@ -45,7 +44,7 @@ class Comms (threading.Thread):
 				cam.camera(recv_data)
 				cam.servo(recv_data)
 			
-			else: # if it's not any of the above, it's something else and we need to know what
+			elif (recv_data != " "): # if it's not any of the above, it's something else and we need to know what
 				print colored("Received: %s" % recv_data, 'blue') # print out the message
 	#                        print colored("Length: %.0f" % len(recv_data), 'blue') # print out the length of the message
 	                        print colored("Sender IP: " + addr, 'blue') # print out the sender's IP

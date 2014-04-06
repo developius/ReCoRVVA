@@ -1,9 +1,9 @@
-#!/usr/bin/python
-#---------------------------------------------------------------------------------------------------------+
-#                                               xbox.py                                                   |
-# Gets the data from a Wii mote and sends it via a Python socket to the ReCoRVVA                          |
-# (c) 2014 A. Ledesma (monkeeyman@hotmail.co.uk) & F. Anderson (finnian@fxapi.co.uk)                      |
-# Thanks to F. Anderson for the use of his API                                        			  |
-#---------------------------------------------------------------------------------------------------------+
+import socket, recorvva
 
-#we need some code Angus!
+recorvva.connect()
+
+while True:
+	input = raw_input("Type the message you want to send: ")
+	print("Sending: " + input)
+	recorvva.send_msg(input)
+

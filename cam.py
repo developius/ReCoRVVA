@@ -8,6 +8,7 @@
 from termcolor import colored
 import comms, os
 import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
 
 servoNeutral = 7.5
 servoUp = servoRight = 12.5
@@ -16,7 +17,9 @@ servoDown = servoLeft = 2.5
 #tilt = GPIO.PWM(26,50)
 #pan.start(servoNeutral)
 #tilt.start(servoNeutral)
-headlights = "pinNumber"
+headlights = 7
+
+GPIO.setup(headlights, GPIO.OUT)
 
 def camera(status):
 	if status == "CamOn":
@@ -28,13 +31,13 @@ def camera(status):
 	
 	if status == "HL":
 		print colored("Switching off headlights", 'yellow')
-#		GPIO.output(headlights, LOW)
-		comms.sendToUI("Headlights off")
+		GPIO.output(headlights, False)
+		#comms.sendToUI("Headlights off")
 
 	if status == "HH":
 		print colored("Switching on headlights", 'yellow')
-#		GPIO.output(headlights, HIGH)
-		comms.sendToUI("Headlights on")
+		GPIO.output(headlights, True)
+		#comms.sendToUI("Headlights on")
 
 def servo(direction):
 	if direction == "pan_left":
