@@ -16,6 +16,9 @@ from random import randrange
 trig = 26 # gpio 7
 echo = 24 # gpio 8
 
+GPIO.setup(trig, GPIO.OUT)
+GPIO.setup(echo, GPIO.IN)
+
 last3 = deque(maxlen=3)
 
 class Ping (threading.Thread):
