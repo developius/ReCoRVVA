@@ -65,12 +65,12 @@ class Temp (threading.Thread):
         def run (self):
 		print colored("Starting temperature and humidity sensor", 'green')
 		while True:
-			if dhtreader.read(tempType, tempPin).find(',')!=-1:
+			if (dhtreader.read(tempType, tempPin) != "None"):
+				print "'None' was not found"
 				t, h = dhtreader.read(tempType, tempPin)
 				print colored("\nTemp = {0} *C, Hum = {1} %".format(t, h), 'green')
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!", 'red')
 				if h > 50:
 					print colored("HUMIDITY went above 50 - it's gonna rain!", 'red')
-			else:
-				continue
+			time.sleep(3)
