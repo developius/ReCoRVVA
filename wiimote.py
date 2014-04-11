@@ -1,8 +1,8 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               wiimote.py                                                |
-# Gets the data from a Wiimote and sends it via a Python socket to the ReCCoRVVA			          |
-# (c) 2014 B. James (ben@fxapi.co.uk)                                                                     |
+# Gets the data from a Wiimote and sends it via a Python socket to the ReCCoRVVA			  |
+# (c) 2014 B. James (musicboyben1999@gmail.com)                                                           |
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
 
