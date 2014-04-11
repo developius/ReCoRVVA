@@ -7,7 +7,7 @@
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
-import threading, time, comms, motors, socket, dhtreader
+import threading, time, comms, motors, socket, dhtreader, sys
 from termcolor import colored
 from collections import deque
 import RPi.GPIO as GPIO
@@ -49,16 +49,19 @@ class Ping (threading.Thread):
 			last3.append(distance)
 			avg = sum(last3) / len(last3)
 
-#			file = open('/var/www/crest/pingfile.txt', 'w')
-#       			file.write(avg)
-#		        file.close()
+			file = open('/var/www/crest/pingfile.txt', 'wb')
+       			file.write(str(avg))
+		        file.close()
 
                         if distance > 10 or avg > 10:
-                                print colored("\nNo obstructions: %.1f" % avg + "cms", 'green')
+	#			sys.stdout.write("[PING]  No obstructions: %.1f" % avg + "cms\r")
+	#			sys.stdout.flush()
+				print colored("[PING]  No obstructions: %.1f" % avg + "cms\r", 'green')
 				comms.iPad('No obstructions: %d' % avg + 'cms')
-
-                        else:
-                                print colored("\nPAY ATTENTION: %.1f" % avg + "cms", 'red')
+			else:
+	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
+	#			sys.stdout.flush()
+				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
 				comms.iPad('PAY ATTENTION: %d' % avg +'cms')
 
 class Temp (threading.Thread):
@@ -68,10 +71,12 @@ class Temp (threading.Thread):
 			temphumid = dhtreader.read(tempType, tempPin)
 			if temphumid is not None:
 				t, h = temphumid
-				print colored("\nTemp = {0} *C, Hum = {1} %".format(t, h), 'green')
+#				sys.stdout.write("\r[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h)
+#				sys.stdout.flush()
+				print colored("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h), 'green')
 				if t > 50:
-					print colored("TEMPERATURE went above 50*C - help!", 'red')
+					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
 				if h > 50:
-					print colored("HUMIDITY went above 50 - it's gonna rain!", 'red')
+					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
 			else:
 				time.sleep(3)
