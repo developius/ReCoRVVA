@@ -10,11 +10,11 @@
 from termcolor import colored
 import socket, threading, os, time, math
 import RPi.GPIO as GPIO
-import ping, motors, comms, cam
+import sensors, motors, comms, cam
 
 # Setup the GPIOs
 GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(True)
+GPIO.setwarnings(False)
 GPIO.setup(7,GPIO.OUT)
 GPIO.setup(8,GPIO.IN)
 GPIO.setup(11,GPIO.OUT)
@@ -22,9 +22,6 @@ GPIO.setup(10,GPIO.OUT)
 GPIO.setup(12,GPIO.OUT)
 GPIO.setup(3,GPIO.OUT)
 GPIO.setup(5,GPIO.OUT)
-
-GPIO.setup(24, GPIO.OUT)
-GPIO.setup(26, GPIO.OUT)
 
 print colored("Robot ping and control script, written in Python", 'magenta')
 print colored("Let\'s drive!\n", 'magenta')
@@ -39,5 +36,5 @@ time.sleep(2)
 print colored("Waiting for client connection...", 'yellow')
 
 comms.Comms().start()
-print "starting ping"
-ping.Ping().start()
+sensors.Ping().start()
+sensors.Temp().start()

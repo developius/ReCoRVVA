@@ -7,14 +7,24 @@
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
-import threading, time, comms, motors, socket
+import threading, time, comms, motors, socket, dhtreader
 from termcolor import colored
 from collections import deque
 import RPi.GPIO as GPIO
 from random import randrange
 
-trig = 26 # gpio 7
-echo = 24 # gpio 8
+trig = 24 # gpio 7
+echo = 26 # gpio 8
+
+tempType = 11
+tempPin = 3
+dhtreader.init()
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(trig, GPIO.OUT)
+GPIO.setup(echo, GPIO.IN)
+GPIO.setup(tempPin, GPIO.IN)
 
 last3 = deque(maxlen=3)
 
@@ -23,34 +33,42 @@ class Ping (threading.Thread):
 		print colored("Sending ping to iPad only", 'green')
                 while True:
 			GPIO.output(trig, False)
-                        print "sleeping in ping"
 			time.sleep(1)
                         GPIO.output(trig, True)
                         time.sleep(0.00001)
                         GPIO.output(trig, False)
                         while GPIO.input(echo) == 0:
                                 signaloff = time.time()
-			print "timer finished"
                         while GPIO.input(echo) == 1:
                                 signalon = time.time()
 
                         timepassed = signalon - signaloff
 
                         distance = timepassed * 17000
-                        distance4term = round(timepassed * 17000, 2)
-                        distance4cli = round(timepassed * 17000, 10)
 
 			last3.append(distance)
 			avg = sum(last3) / len(last3)
 
-			file = open('/var/www/crest/pingfile.txt', 'w')
-       			file.write(avg)
-		        file.close()
+#			file = open('/var/www/crest/pingfile.txt', 'w')
+#       			file.write(avg)
+#		        file.close()
 
-                        if distance >= 10 or avg >= 10:
-                                print colored("No obstructions: %.1f" % distance4term + "cms", 'green')
+                        if distance > 10 or avg > 10:
+                                print colored("\nNo obstructions: %.1f" % avg + "cms", 'green')
 				comms.iPad('No obstructions: %d' % avg + 'cms')
 
                         else:
-                                print colored("PAY ATTENTION: %.1f" % distance4term + "cms", 'red')
+                                print colored("\nPAY ATTENTION: %.1f" % avg + "cms", 'red')
 				comms.iPad('PAY ATTENTION: %d' % avg +'cms')
+
+class Temp (threading.Thread):
+        def run (self):
+		print colored("Starting temperature and humidity sensor", 'green')
+		while True:
+			if dhtreader.read(tempType, tempPin) is not None:
+				t, h = dhtreader.read(tempType, tempPin)
+				print colored("\nTemp = {0} *C, Hum = {1} %".format(t, h), 'green')
+				if t > 50:
+					print colored("TEMPERATURE went above 50*C - help!", 'red')
+				if h > 50:
+					print colored("HUMIDITY went above 50 - it's gonna rain!", 'red')
