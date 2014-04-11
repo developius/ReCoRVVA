@@ -1,9 +1,9 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #						main.py							  |
-# Hamdles the multithreading and the other scripts
-# (c) 2014 F. Anderson (finnian@fxapi.co.uk)								  |
-#	Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
+# Hamdles the multithreading and the other scripts.                                                       |
+# (c) 2014 F. Anderson (finnian@fxapi.co.uk) and B. James (musicboyben1999@gmail.com)	                  |
+#	Thanks for contribution to A. Ledesma (monkeeyman@hotmail.co.uk)                                  |
 #---------------------------------------------------------------------------------------------------------+
 
 # Import the various modules
