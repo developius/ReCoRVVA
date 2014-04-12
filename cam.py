@@ -8,6 +8,7 @@
 from termcolor import colored
 import comms, os
 import RPi.GPIO as GPIO
+
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
