@@ -27,7 +27,7 @@ def sendToUI(msg):
 
 class Comms (threading.Thread):
         def run (self):
-		print colored("Listening", 'red')
+		print colored("Socket ready", 'red')
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
 			addr = str(addr)

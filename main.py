@@ -24,17 +24,15 @@ GPIO.setup(3,GPIO.OUT)
 GPIO.setup(5,GPIO.OUT)
 
 print colored("Robot ping and control script, written in Python", 'magenta')
-print colored("Let\'s drive!\n", 'magenta')
+print colored("Let's go!\n", 'magenta')
 
 #Start the camera feed
-cam.camera("on")
+cam.camera("CamOn")
 
 print colored("Leaving time for camera warmup, please wait", 'red')
 time.sleep(2)
 
 #Start Ping thread and Communication threads
-print colored("Waiting for client connection...", 'yellow')
-
 comms.Comms().start()
 sensors.Ping().start()
 sensors.Temp().start()
