@@ -30,7 +30,6 @@ last3 = deque(maxlen=3)
 
 class Ping (threading.Thread):
         def run (self):
-		print colored("Sending ping to iPad only", 'green')
                 while True:
 			GPIO.output(trig, False)
 			time.sleep(1)
@@ -49,20 +48,18 @@ class Ping (threading.Thread):
 			last3.append(distance)
 			avg = sum(last3) / len(last3)
 
-			file = open('/var/www/crest/pingfile.txt', 'wb')
-       			file.write(str(avg))
-		        file.close()
+			pingfile = open('/var/www/crest/pingfile.txt', 'w')
+       			pingfile.write(str(avg))
+		        pingfile.close()
 
                         if distance > 10 or avg > 10:
 	#			sys.stdout.write("[PING]  No obstructions: %.1f" % avg + "cms\r")
 	#			sys.stdout.flush()
 				print colored("[PING]  No obstructions: %.1f" % avg + "cms\r", 'green')
-				comms.iPad('No obstructions: %d' % avg + 'cms')
 			else:
 	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
 	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
-				comms.iPad('PAY ATTENTION: %d' % avg +'cms')
 
 class Temp (threading.Thread):
         def run (self):
@@ -74,6 +71,12 @@ class Temp (threading.Thread):
 #				sys.stdout.write("\r[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h)
 #				sys.stdout.flush()
 				print colored("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h), 'green')
+				dhtfile_t = open('/var/www/crest/dhtfile_t.txt', 'w')
+				dhtfile_t.write(str(t) + "*C")
+				dhtfile_t.close()
+				dhtfile_h = open('/var/www/crest/dhtfile_h.txt', 'w')
+				dhtfile_h.write(str(h) + "%")
+				dhtfile_h.close()
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
 				if h > 50:
