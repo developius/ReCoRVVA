@@ -51,34 +51,39 @@ def commands():
 	print colored("HL		Turn headlights off", 'blue')
 
 def connect():
+	global address
 	try:
 		client_socket.connect(fxapi)
-		global address
-		client_socket.sendto("Client connected", fxapi)
+		client_socket.sendto("Client connected", fapi)
+		client_socket.sendto(" ", fxapi)
 		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
 		address = fxapi
-	except Exception:
-		print "fxapi as address failed"
+	except:
+		print colored("'fxapi' as address failed", 'red')
 		try:
 	                client_socket.connect(fxapiL)
         	        client_socket.sendto("Client connected", fxapiL)
+			client_socket.sendto(" ", fxapiL)
        		        print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
 			address = fxapiL
-		except Exception:
-			print "fxapi.local as address failed"
+		except:
+			print colored("'fxapi.local' as address failed", 'red')
 			try:
 		                client_socket.connect(vpn)
 		                client_socket.sendto("Client connected", vpn)
+				client_socket.sendto(" ", vpn)
 		                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
 				address = vpn
-			except Exception:
-				print "vpn as address failed"
-				print colored("Could not connect to ReCoRVVA",'blue')
+			except:
+				print colored("'25.110.219.165' (VPN) as address failed", 'red')
+				print colored("Could not connect to ReCoRVVA",'red')
+				sys.exit(0)
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	send_msg("Client disconnected")
 #	stop_data()
+	client_socket.shutdown(0)
 	client_socket.close()
 
 def send_msg(msg):
@@ -104,8 +109,3 @@ class data_thread (threading.Thread):
 				print colored("\n<SERVER> " + recv_data, 'red')
 			except error:
 				print colored("Could not get data", 'blue')
-
-connect()
-while True:
-	data = raw_input("<CLIENT> ")
-	send_msg(data)
