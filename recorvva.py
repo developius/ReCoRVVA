@@ -13,7 +13,7 @@ import sys, threading
 port = 7777
 vpn = ("25.110.219.165", port)
 fxapi = ("fxapi", port)
-fxapi2 = ("fxapi.local", port)
+fxapiL = ("fxapi.local", port)
 address = 0
 
 client_socket = socket(AF_INET, SOCK_DGRAM)
@@ -52,33 +52,33 @@ def commands():
 
 def connect():
 	try:
-		client_socket.connect(vpn)
+		client_socket.connect(fxapi)
 		global address
-		client_socket.sendto("Client connected", vpn)
-		print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
-		address = vpn
-	except error:
-		print "vpn ip failed"
+		client_socket.sendto("Client connected", fxapi)
+		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+		address = fxapi
+	except Exception:
+		print "fxapi as address failed"
 		try:
-	                client_socket.connect(fxapi)
-        	        client_socket.sendto("Client connected", fxapi)
-       		        print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
-			address = fxapi
-		except error:
-			print "fxapi as address failed"
+	                client_socket.connect(fxapiL)
+        	        client_socket.sendto("Client connected", fxapiL)
+       		        print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+			address = fxapiL
+		except Exception:
+			print "fxapi.local as address failed"
 			try:
-		                client_socket.connect(fxapi2)
-		                client_socket.sendto("Client connected", fxapi2)
-		                print colored("Connected to ReCoRVVA on " + str(fxapi2), 'blue')
-				address = fxapi2
-			except error:
-				print "fxapi.local as address failed"
+		                client_socket.connect(vpn)
+		                client_socket.sendto("Client connected", vpn)
+		                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+				address = vpn
+			except Exception:
+				print "vpn as address failed"
 				print colored("Could not connect to ReCoRVVA",'blue')
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	send_msg("Client disconnected")
-	stop_data()
+#	stop_data()
 	client_socket.close()
 
 def send_msg(msg):
@@ -104,3 +104,8 @@ class data_thread (threading.Thread):
 				print colored("\n<SERVER> " + recv_data, 'red')
 			except error:
 				print colored("Could not get data", 'blue')
+
+connect()
+while True:
+	data = raw_input("<CLIENT> ")
+	send_msg(data)

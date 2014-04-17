@@ -46,7 +46,7 @@ class Ping (threading.Thread):
                         distance = timepassed * 17000
 
 			last3.append(distance)
-			avg = sum(last3) / len(last3)
+			avg = round(sum(last3) / len(last3))
 
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
