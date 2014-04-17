@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python 
 #---------------------------------------------------------------------------------------------------------+
 #                                               comms.py                                                  |
 # Handles the communication through a Python socket							  |
@@ -12,7 +12,12 @@ from termcolor import colored
 
 address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
-server_socket.bind(address)
+try:
+	server_socket.bind(address)
+except error:
+	print colored("Address already in use", 'red')
+	server_socket.close()
+	sys.exit(0)
 
 ipad = ('192.168.1.161',7777)
 
@@ -30,21 +35,28 @@ class Comms (threading.Thread):
 		print colored("Socket ready", 'red')
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
-			addr = str(addr)
+			host = addr[0]
+			port = addr[1]
+			print("Address: " + str(addr))
+			print("Host: " + str(host) + " Port: " + str(port))
+			if (str(host) == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "fxapi"):
+				pass
+			else:
+				print colored("Unauthorised connection attempted - " + host + " - closing socket", 'red')
+#				server_socket.close() # doesnt work as we CANNOT do this
+
 			if recv_data == "Client connected" :
-				print colored("Client " + addr + " connected", 'red')
+	          		print colored("Client " + host + " connected - and is friendly", 'red')
 				sendToUI("Welcome!")
-				iPad("Client " + addr + " connected")
 			if recv_data == "Client disconnected":
-				print colored("Client " + addr + " disconnected", 'red')
+				print colored("Client " + host + " disconnected", 'red')
 				sendToUI("Goodbye!")
-				iPad("Client " + addr + " disconnected")
 			if (recv_data in CMDS) == True:
 				motors.move(recv_data)
 				cam.camera(recv_data)
 				cam.servo(recv_data)
 			
-			elif (recv_data != " "): # if it's not any of the above, it's something else and we need to know what
+			elif (recv_data != " ") and recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
 				print colored("Received: %s" % recv_data, 'blue') # print out the message
 	#                        print colored("Length: %.0f" % len(recv_data), 'blue') # print out the length of the message
-	                        print colored("Sender IP: " + addr, 'blue') # print out the sender's IP
+	                        print colored("Sender IP: " + host, 'blue') # print out the sender's IP
