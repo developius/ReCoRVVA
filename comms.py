@@ -12,10 +12,11 @@ from termcolor import colored
 
 address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
+
 try:
 	server_socket.bind(address)
 except error:
-	print colored("Address already in use", 'red')
+	print colored("Address already in use: " + error, 'red')
 	server_socket.close()
 	sys.exit(0)
 
@@ -37,13 +38,13 @@ class Comms (threading.Thread):
 			recv_data, addr = server_socket.recvfrom(2048)
 			host = addr[0]
 			port = addr[1]
-			print("Address: " + str(addr))
-			print("Host: " + str(host) + " Port: " + str(port))
+	#		print("Address: " + str(addr))
+	#		print("Host: " + str(host) + " Port: " + str(port))
 			if (str(host) == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "fxapi"):
 				pass
 			else:
 				print colored("Unauthorised connection attempted - " + host + " - closing socket", 'red')
-#				server_socket.close() # doesnt work as we CANNOT do this
+				server_socket.shutdown()
 
 			if recv_data == "Client connected" :
 	          		print colored("Client " + host + " connected - and is friendly", 'red')
