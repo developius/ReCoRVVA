@@ -32,7 +32,7 @@ cam.camera("CamOn")
 print colored("Leaving time for camera warmup, please wait", 'red')
 time.sleep(2)
 
-#Start Ping thread and Communication threads
+#Start Sensors and Communication threads
 comms.Comms().start()
 sensors.Ping().start()
 sensors.Temp().start()

@@ -15,10 +15,13 @@ server_socket = socket(AF_INET, SOCK_DGRAM)
 
 try:
 	server_socket.bind(address)
-except error:
-	print colored("Address already in use: " + error, 'red')
+
+except:
+	print colored("Address already in use", 'red')
 	server_socket.close()
 	sys.exit(0)
+
+print colored("Socket ready", 'blue')
 
 ipad = ('192.168.1.161',7777)
 
@@ -33,31 +36,35 @@ def sendToUI(msg):
 
 class Comms (threading.Thread):
         def run (self):
-		print colored("Socket ready", 'red')
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
-			host = addr[0]
+			hostIP = addr[0]
+			host = gethostbyaddr(hostIP)[0]
 			port = addr[1]
 	#		print("Address: " + str(addr))
-	#		print("Host: " + str(host) + " Port: " + str(port))
-			if (str(host) == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "fxapi"):
+			print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
+			if (host == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "localhost" or "fxapi"):
 				pass
-			else:
-				print colored("Unauthorised connection attempted - " + host + " - closing socket", 'red')
-				server_socket.shutdown()
+			else:	# It's malicious
+				print colored("Unauthorised connection attempted - " + str(host) + " - closing socket", 'red')
+				server_socket.close()
+				print colored("Socket closed to everyone", 'red')
+				break
 
-			if recv_data == "Client connected" :
-	          		print colored("Client " + host + " connected - and is friendly", 'red')
+			if recv_data == "Client connected":
+	          		print colored("Client " + str(host) + " connected - and is friendly", 'red')
 				sendToUI("Welcome!")
 			if recv_data == "Client disconnected":
-				print colored("Client " + host + " disconnected", 'red')
+				print colored("Client " + str(host) + " disconnected", 'red')
 				sendToUI("Goodbye!")
 			if (recv_data in CMDS) == True:
 				motors.move(recv_data)
 				cam.camera(recv_data)
 				cam.servo(recv_data)
-			
-			elif (recv_data != " ") and recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
+			if (recv_data == ""):
+				pass
+
+			elif recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
 				print colored("Received: %s" % recv_data, 'blue') # print out the message
 	#                        print colored("Length: %.0f" % len(recv_data), 'blue') # print out the length of the message
-	                        print colored("Sender IP: " + host, 'blue') # print out the sender's IP
+	                        print colored("Sender hostname: " + str(host), 'blue') # print out the sender's IP
