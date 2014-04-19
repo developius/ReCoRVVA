@@ -59,7 +59,7 @@ class Comms (threading.Thread):
 				sendToUI("Goodbye!")
 			if (recv_data in CMDS) == True:
 				motors.move(recv_data)
-				cam.camera(recv_data)
+				cam.camera(recv_data) 
 				cam.servo(recv_data)
 			if (recv_data == ""):
 				pass
