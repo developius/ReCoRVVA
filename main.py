@@ -30,7 +30,7 @@ print colored("Let's go!\n", 'magenta')
 cam.camera("CamOn")
 
 print colored("Leaving time for camera warmup, please wait", 'red')
-time.sleep(2)
+time.sleep(1)
 
 #Start Sensors and Communication threads
 comms.Comms().start()
