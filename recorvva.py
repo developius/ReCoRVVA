@@ -10,7 +10,12 @@ from time import sleep
 from termcolor import colored
 import sys, threading
 
-address = ('25.110.219.165', 7777)
+port = 7777
+vpn = ("25.110.219.165", port)
+fxapi = ("fxapi", port)
+fxapiL = ("fxapi.local", port)
+address = 0
+
 client_socket = socket(AF_INET, SOCK_DGRAM)
 
 def help():
@@ -46,18 +51,39 @@ def commands():
 	print colored("HL		Turn headlights off", 'blue')
 
 def connect():
+	global address
 	try:
-		client_socket.connect(address)
-		send_msg("Client connected")
-		print colored("Connected to ReCoRVVA", 'blue')
-	except error:
-		print colored("Could not connect to ReCoRVVA", 'blue')
-#		sys.exit(1)
+		client_socket.connect(fxapi)
+		client_socket.sendto("Client connected", fapi)
+		client_socket.sendto(" ", fxapi)
+		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+		address = fxapi
+	except:
+		print colored("'fxapi' as address failed", 'red')
+		try:
+	                client_socket.connect(fxapiL)
+        	        client_socket.sendto("Client connected", fxapiL)
+			client_socket.sendto(" ", fxapiL)
+       		        print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+			address = fxapiL
+		except:
+			print colored("'fxapi.local' as address failed", 'red')
+			try:
+		                client_socket.connect(vpn)
+		                client_socket.sendto("Client connected", vpn)
+				client_socket.sendto(" ", vpn)
+		                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+				address = vpn
+			except:
+				print colored("'25.110.219.165' (VPN) as address failed", 'red')
+				print colored("Could not connect to ReCoRVVA",'red')
+				sys.exit(0)
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	send_msg("Client disconnected")
-	stop_data()
+#	stop_data()
+	client_socket.shutdown(0)
 	client_socket.close()
 
 def send_msg(msg):

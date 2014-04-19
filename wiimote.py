@@ -1,20 +1,24 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               wiimote.py                                                |
-# Gets the data from a Wiimote and sends it via a Python socket to the ReCCoRVVA			          |
-# (c) 2014 B. James (ben@fxapi.co.uk)                                                                     |
+# Gets the data from a Wiimote and sends it via a Python socket to the ReCCoRVVA			  |
+# (c) 2014 B. James (musicboyben1999@gmail.com)                                                           |
 # Thanks to F. Anderson (finnian@fxapi.co.uk) for the use of his API                                      |
 #---------------------------------------------------------------------------------------------------------+
 
 #Thanks to the developers of the CWiid bluetooth library at http://abstrakraft.org/cwiid 
 
-import cwiid, time, recorvva # cwiid needs to be in the 'requirments' - xavbabe   Done - benji
-#I know I could have done "from recorvva import *" but this way I do "recorvva." before everything, so I know where all
-#the functions come from.
+import cwiid, time, recorvva
+
+#recorvva.help()
+#print("---")
+#recorvva.commands()
 
 recorvva.connect()
 
 button_delay = 0.25
+
+ledStatus = False
 
 print("Press 1 + 2 on your Wii Remote now ...")
 time.sleep(1)
@@ -35,7 +39,6 @@ wm.led = 1
 wm.rumble = 1
 time.sleep(1)
 wm.rumble = 0
-
 
 print("Wii Remote connected...\n")
 print("Press some buttons!\n")
@@ -113,9 +116,17 @@ while True:
     time.sleep(button_delay)
     
   if (buttons & cwiid.BTN_A):
-    print("Button A pressed")
-    recorvva.send_msg("HH") # headlights HIGH
-    time.sleep(button_delay)
+    if (ledStatus == True):
+      print("turning  headlights off")
+      recorvva.send_msg("HH") # headlights HIGH
+      ledStatus = False
+      time.sleep(button_delay)
+
+    else:
+      print("turning headlights on")
+      recorvva.send_msg("HL") #headlights HIGH
+      ledStatus = True
+      time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_B):
     print("Button B pressed")
