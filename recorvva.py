@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #                                               recorvva.py                                               |
-# API for communication with the RecoRVVA via a Python socket						  |
+# API and wrapper for communication with the RecoRVVA via a Python socket						  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #---------------------------------------------------------------------------------------------------------+
  
@@ -54,7 +54,7 @@ def connect():
 	global address
 	try:
 		client_socket.connect(fxapi)
-		client_socket.sendto("Client connected", fapi)
+		client_socket.sendto("Client connected", fxapi)
 		client_socket.sendto(" ", fxapi)
 		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
 		address = fxapi
