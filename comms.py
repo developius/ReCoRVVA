@@ -42,7 +42,7 @@ class Comms (threading.Thread):
 			host = gethostbyaddr(hostIP)[0]
 			port = addr[1]
 	#		print("Address: " + str(addr))
-			print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
+	#		print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
 			if (host == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "localhost" or "fxapi"):
 				pass
 			else:	# It's malicious
