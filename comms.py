@@ -13,16 +13,6 @@ from termcolor import colored
 address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
 
-try:
-	server_socket.bind(address)
-
-except:
-	print colored("Address already in use", 'red')
-	server_socket.close()
-	sys.exit(0)
-
-print colored("Socket ready", 'blue')
-
 ipad = ('192.168.1.161',7777)
 
 CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_neutral","tilt_up","tilt_down","tilt_neutral","HH","HL"]
@@ -36,10 +26,22 @@ def sendToUI(msg):
 
 class Comms (threading.Thread):
         def run (self):
+		try:
+			server_socket.bind(address)
+		except:
+		        print colored("Address already in use", 'red')
+		        server_socket.close()
+		        sys.exit(0)
+		print colored("Socket ready", 'blue')
+
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
 			hostIP = addr[0]
-			host = gethostbyaddr(hostIP)[0]
+			try:
+				host = gethostbyaddr(hostIP)[0]
+			except:
+				host = hostIP
+
 			port = addr[1]
 	#		print("Address: " + str(addr))
 	#		print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
