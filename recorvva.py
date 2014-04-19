@@ -4,7 +4,7 @@
 # API for communication with the RecoRVVA via a Python socket						  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #---------------------------------------------------------------------------------------------------------+
-
+ 
 from socket import *
 from time import sleep
 from termcolor import colored
