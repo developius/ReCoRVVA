@@ -53,11 +53,11 @@ def commands():
 def connect():
 	global address
 	try:
-		client_socket.connect((fxapi))
-		client_socket.sendto("Client connected", fxapi)
-		client_socket.sendto(" ", fxapi)
-		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
-		address = fxapi
+		client_socket.connect((vpn))
+		client_socket.sendto("Client connected", vpn)
+		client_socket.sendto(" ", vpn)
+		print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+		address = vpn
 	except:
 		print colored("'fxapi' as address failed", 'red')
 		try:
@@ -69,10 +69,10 @@ def connect():
 		except:
 			print colored("'fxapi.local' as address failed", 'red')
 			try:
-		                client_socket.connect((vpn))
-		                client_socket.sendto("Client connected", vpn)
-				client_socket.sendto(" ", vpn)
-		                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+		                client_socket.connect((fxapi))
+		                client_socket.sendto("Client connected", fxapi)
+				client_socket.sendto(" ", fxapi)
+		                print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
 				address = vpn
 			except:
 				print colored("'25.110.219.165' (VPN) as address failed", 'red')
