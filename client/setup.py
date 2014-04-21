@@ -1,11 +1,15 @@
 import os
+from distutils.core import setup
 
-print("Downloading module 'termcolor'")
-os.system("wget https://pypi.python.org/packages/source/t/termcolor/termcolor-1.1.0.tar.gz")
-print("Extracting termcolor...")
-os.system("tar zxvf termcolor-1.1.0.tar.gz")
-print("Building and installing termcolor...")
-os.system("cd termcolor-1.1.0; python setup.py build; sudo python setup.py install")
-print("Successfully installed termcolor! - cleaning up")
-os.system("rm -r termcolor*") 
-print("Done")
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+setup(name='ReCoRVVA_client',
+      version='1.0',
+      py_modules=['recorvva','wiimote','xbox','install_termcolor'],
+      description='ReCoRVVA connection API and wrapper for Python',
+      author='F. Anderson, B. James, A. Ledesma',
+      author_email='finnian@fxapi.co.uk, benji@fxapi.co.uk, monkeeyman@hotmail.co.uk',
+      url='http://www.github.com/xavbabe/ReCoRVVA',
+      long_description=read('README'),
+      )
