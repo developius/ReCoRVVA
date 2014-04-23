@@ -56,29 +56,31 @@ def connect():
 		client_socket.connect((vpn))
 		client_socket.sendto("Client connected", vpn)
 		client_socket.sendto(" ", vpn)
-		print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
-		address = vpn
 	except:
 		print colored("'fxapi' as address failed", 'red')
 		try:
 	                client_socket.connect((fxapiL))
         	        client_socket.sendto("Client connected", fxapiL)
 			client_socket.sendto(" ", fxapiL)
-       		        print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
-			address = fxapiL
 		except:
 			print colored("'fxapi.local' as address failed", 'red')
 			try:
 		                client_socket.connect((fxapi))
 		                client_socket.sendto("Client connected", fxapi)
 				client_socket.sendto(" ", fxapi)
-		                print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
-				address = vpn
 			except:
 				print colored("'25.110.219.165' (VPN) as address failed", 'red')
 				print colored("Could not connect to ReCoRVVA",'red')
 				sys.exit(0)
 
+			print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+	                address = fxapi
+
+		print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+                address = fxapiL
+
+	print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+	address = vpn
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	send_msg("Client disconnected")
