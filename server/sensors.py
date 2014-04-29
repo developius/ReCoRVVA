@@ -1,9 +1,9 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
-#                                               ping.py                                                   |
+#                                               sensors.py                                                |
 # Gets the ping from an ultrasonic sensor and the temperature and humididty from a DHT-11 sensor	  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
-#       Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
+#       Thanks for contribution to B. James (benji@fxapi.co.uk)	                 	     	  	  |
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
