@@ -3,7 +3,6 @@
 #                                               comms.py                                                  |
 # Handles the communication through a Python socket							  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
-#       Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
 #---------------------------------------------------------------------------------------------------------+
 
 from socket import *
@@ -12,16 +11,6 @@ from termcolor import colored
 
 address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
-
-try:
-	server_socket.bind(address)
-
-except:
-	print colored("Address already in use", 'red')
-	server_socket.close()
-	sys.exit(0)
-
-print colored("Socket ready", 'blue')
 
 ipad = ('192.168.1.161',7777)
 
@@ -36,10 +25,22 @@ def sendToUI(msg):
 
 class Comms (threading.Thread):
         def run (self):
+		try:
+			server_socket.bind(address)
+		except:
+		        print colored("Address already in use", 'red')
+		        server_socket.close()
+		        sys.exit(0)
+		print colored("Socket ready", 'blue')
+
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
 			hostIP = addr[0]
-			host = gethostbyaddr(hostIP)[0]
+			try:
+				host = gethostbyaddr(hostIP)[0]
+			except:
+				host = hostIP
+
 			port = addr[1]
 	#		print("Address: " + str(addr))
 	#		print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
