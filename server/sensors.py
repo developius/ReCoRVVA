@@ -2,8 +2,7 @@
 #---------------------------------------------------------------------------------------------------------+
 #                                               sensors.py                                                |
 # Gets the ping from an ultrasonic sensor and the temperature and humididty from a DHT-11 sensor	  |
-# (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
-#       Thanks for contribution to B. James (benji@fxapi.co.uk)	                 	     	  	  |
+# (c) 2014 F. Anderson (finnian@fxapi.co.uk) and  B. James (musicboyben@gmail.com)	                  |
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
@@ -27,6 +26,8 @@ GPIO.setup(echo, GPIO.IN)
 GPIO.setup(tempPin, GPIO.IN)
 
 last3 = deque(maxlen=3)
+
+############################################ Ping sensor thread ###########################################################
 
 class Ping (threading.Thread):
         def run (self):
@@ -60,6 +61,9 @@ class Ping (threading.Thread):
 	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
 	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
+
+############################################ Temperature sensor thread ####################################################
+
 
 class Temp (threading.Thread):
         def run (self):
