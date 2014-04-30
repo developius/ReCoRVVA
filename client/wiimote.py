@@ -29,8 +29,7 @@ try:
   
 except RuntimeError:
   print("Couldn't find wii remote")
-  quit() #Do you actually ever get a error? Say start it with Wiimote not near- xavbabe   Yes, a message 
-  #from the quit() function and the "couldn't find wii remote" message.
+  quit() 
     
 #turn on led to show connected
 wm.led = 1
@@ -41,7 +40,7 @@ time.sleep(1)
 wm.rumble = 0
 
 print("Wii Remote connected...\n")
-print("Press some buttons!\n")
+print("You are now controlling ReCorVVa!\n")
 print("Press PLUS and MINUS together to disconnect and quit.\n")
 
 #turn on reporting mode
@@ -75,8 +74,7 @@ while True:
       recorvva.send_msg("N")
       tilt_status = 'neutral'
 
-  # If Plus and Minus buttons pressed
-  # together then rumble and quit.
+  # If Plus and Minus buttons pressed together then rumble and quit.
   if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):
     print("\nClosing connection ...")
     wm.rumble = 1
