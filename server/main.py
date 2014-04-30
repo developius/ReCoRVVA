@@ -3,7 +3,6 @@
 #						main.py							  |
 # Hamdles the multithreading and the other scripts.                                                       |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk) and B. James (musicboyben1999@gmail.com)	                  |
-#	Thanks for contribution to A. Ledesma (monkeeyman@hotmail.co.uk)                                  |
 #---------------------------------------------------------------------------------------------------------+
 
 # Import the various modules
@@ -30,7 +29,7 @@ print colored("Let's go!\n", 'magenta')
 cam.camera("CamOn")
 
 print colored("Leaving time for camera warmup, please wait", 'red')
-time.sleep(2)
+time.sleep(1)
 
 #Start Sensors and Communication threads
 comms.Comms().start()

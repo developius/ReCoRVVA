@@ -4,7 +4,7 @@
 # API and wrapper for communication with the RecoRVVA via a Python socket						  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #---------------------------------------------------------------------------------------------------------+
- 
+  
 from socket import *
 from time import sleep
 from termcolor import colored
@@ -53,32 +53,34 @@ def commands():
 def connect():
 	global address
 	try:
-		client_socket.connect(fxapi)
-		client_socket.sendto("Client connected", fxapi)
-		client_socket.sendto(" ", fxapi)
-		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
-		address = fxapi
+		client_socket.connect((vpn))
+		client_socket.sendto("Client connected", vpn)
+		client_socket.sendto(" ", vpn)
 	except:
 		print colored("'fxapi' as address failed", 'red')
 		try:
-	                client_socket.connect(fxapiL)
+	                client_socket.connect((fxapiL))
         	        client_socket.sendto("Client connected", fxapiL)
 			client_socket.sendto(" ", fxapiL)
-       		        print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
-			address = fxapiL
 		except:
 			print colored("'fxapi.local' as address failed", 'red')
 			try:
-		                client_socket.connect(vpn)
-		                client_socket.sendto("Client connected", vpn)
-				client_socket.sendto(" ", vpn)
-		                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
-				address = vpn
+		                client_socket.connect((fxapi))
+		                client_socket.sendto("Client connected", fxapi)
+				client_socket.sendto(" ", fxapi)
 			except:
 				print colored("'25.110.219.165' (VPN) as address failed", 'red')
 				print colored("Could not connect to ReCoRVVA",'red')
 				sys.exit(0)
 
+			print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+	                address = fxapi
+
+		print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+                address = fxapiL
+
+	print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+	address = vpn
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	send_msg("Client disconnected")

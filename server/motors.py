@@ -3,7 +3,6 @@
 #						motors.py						  |
 # Drives the motors
 # (c) 2014 A. Ledesma (monkeeyman@hotmail.co.uk)                                                          |
-#       Thanks for contribution to B. James (benji@fxapi.co.uk) and F. Anderson (finnian@fxapi.co.uk)	  |
 #---------------------------------------------------------------------------------------------------------+
 
 import RPi.GPIO as GPIO
