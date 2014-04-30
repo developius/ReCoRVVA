@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python 
 #---------------------------------------------------------------------------------------------------------+
 #                                               xbox.py                                                   |
 # API and wrapper for communication with the RecoRVVA via a Python socket                                 |
