@@ -106,6 +106,12 @@ class Xbox (threading.Thread):
                         if event == "Event(guide,0,1)":
                                 print("you released guide")
                                 recorvva.send_msg("you released guide")
+			if event == "Event(RT,1,0)":
+                                print("you pressed RT")
+                                recorvva.send_msg("you pressed RT")
+                        if event == "Event(RT,0,1)":
+                                print("you released RT")
+                                recorvva.send_msg("you released RT")
 
 Xbox().start()
 
