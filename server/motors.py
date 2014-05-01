@@ -10,75 +10,73 @@ from termcolor import colored
 import time
 import comms
 
+GPIO.setmode(GPIO.BOARD)
 T = "True"
 F = "False"
-PmPin1 = 10
-PmPin2 = 12
-SmPin1 = 3
-SmPin2 = 5
+Pin1 = 22  # right 1, pin 25, turn left (forwards)
+Pin2 = 18  # right 2, pin 24, turn left (backwards)
+Pin3 = 12  # left 1, pin 18, turn right (backwards)
+Pin4 = 16  # left 2, pin 23, turn right (forwards)
+GPIO.setup(Pin1, GPIO.OUT)
+GPIO.setup(Pin2, GPIO.OUT)
+GPIO.setup(Pin3, GPIO.OUT)
+GPIO.setup(Pin4, GPIO.OUT)
 
-def drive():
-	print(Pm1,Pm2,Sm1,Sm2)
-        GPIO.output(PmPin1, Pm1)
-        GPIO.output(PmPin2, Pm2)
-        GPIO.output(SmPin1, Sm1)
-        GPIO.output(SmPin2, Sm2)
+def drive(pin,state):
+        GPIO.output(pin,state)
+
+def left():
+	drive(Pin1, True)
+	drive(Pin2, False)
+	drive(Pin3, False)
+	drive(Pin4, False)
+
+def right():
+	drive(Pin1, False)
+	drive(Pin2, False)
+	drive(Pin3, False)
+	drive(Pin4, True)
+
+def forwards():
+	drive(Pin1, True)
+        drive(Pin2, False)
+        drive(Pin3, False)
+        drive(Pin4, True)
+
+def backwards():
+	drive(Pin1, False)
+	drive(Pin2, True)
+	drive(Pin3, True)
+	drive(Pin4, False)
+
+def stop():
+	drive(Pin1, False)
+        drive(Pin2, False)
+        drive(Pin3, False)
+        drive(Pin4, False)
 
 def move(d):
-	if (d == " "):
-		Pm1 = " "
-		Pm2 = " "
-		Sm1 = " "
-		Sm2 = " "
-
 	if (d == "F") or (d == "W"):
-		Pm1 = T
-		Pm2 = F
-		Sm1 = T
-		Sm2 = F
+		forwards()
 		comms.sendToUI("Received Forwards")
 		print colored("Received Forwards", 'yellow')
 
 	if (d == "B") or (d == "X"):
-                Pm1 = F
-                Pm2 = T
-                Sm1 = F
-                Sm2 = T
+		backwards()
                 comms.sendToUI("Received Backwards")
                 print colored("Received Backwards", 'yellow')
 
 	if (d == "L") or (d == "A"):
-                Pm1 = F
-                Pm2 = F
-                Sm1 = T
-                Sm2 = F
+		left()
                 comms.sendToUI("Received Left")
                 print colored("Received Left", 'yellow')
 
 	if (d == "R") or (d == "D"):
-                Pm1 = F
-                Pm2 = T
-                Sm1 = F
-                Sm2 = F
+		right()
                 comms.sendToUI("Received Right")
                 print colored("Received Right", 'yellow')
 
 	if (d == "Stop") or (d == "S"):
-                Pm1 = F
-                Pm2 = F
-                Sm1 = F
-                Sm2 = F
+		stop()
                 comms.sendToUI("Received Stop - Houston, we have a problem!")
                 print colored("Received Stop - Houston, we have a problem!", 'yellow')
-
-	else: # just thinking, would this mean that they stop as soon as they've finished executing the motor
-	      # control?!
-                Pm1 = F
-                Pm2 = F
-                Sm1 = F
-                Sm2 = F
-
-	return (Pm1,Pm2,Sm1,Sm2)
-	drive()
-
-#move(1)

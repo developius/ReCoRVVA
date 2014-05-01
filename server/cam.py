@@ -13,8 +13,8 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 servoNeutral = 7.5
-servoUp = servoRight = 12.5
-servoDown = servoLeft = 2.5
+servoBackwards = servoLeft = 12.5
+servoForwards = servoRight = 2.5
 GPIO.setup(13, GPIO.OUT)
 GPIO.setup(15, GPIO.OUT)
 tilt = GPIO.PWM(13,50)
@@ -53,19 +53,19 @@ def servo(direction):
 		print colored("Panning right", 'yellow')
 		comms.sendToUI("Panning right")
 		pan.ChangeDutyCycle(servoRight)
-	if direction == "pan_neutral":
-		print colored("Panning to neutral", 'yellow')
-		comms.sendToUI("Panning to neutral")
+	if direction == "pan_center":
+		print colored("Panning to center", 'yellow')
+		comms.sendToUI("Panning to center")
 		pan.ChangeDutyCycle(servoNeutral)
-	if direction == "tilt_down":
-		print colored("Tilting down", 'yellow')
-		comms.sendToUI("Tiliting down")
-		tilt.ChangeDutyCycle(servoDown)
+	if direction == "tilt_forwards":
+		print colored("Tilting forwards", 'yellow')
+		comms.sendToUI("Tiliting forwards")
+		tilt.ChangeDutyCycle(servoForwards)
+	if direction == "tilt_backwards":
+		print colored("Tilting backwards", 'yellow')
+		comms.sendToUI("Tiliting backwards")
+		tilt.ChangeDutyCycle(servoBackwards)
 	if direction == "tilt_up":
-		print colored("Tilting up", 'yellow')
-		comms.sendToUI("Tiliting up")
-		tilt.ChangeDutyCycle(servoUp)
-	if direction == "tilt_neutral":
-		print colored("Tilting to neutral", 'yellow')
-		comms.sendToUI("Tiliting to neutral")
+		print colored("Tilting to center", 'yellow')
+		comms.sendToUI("Tiliting to center")
 		tilt.ChangeDutyCycle(servoNeutral)
