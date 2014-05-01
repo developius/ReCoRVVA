@@ -14,7 +14,7 @@ server_socket = socket(AF_INET, SOCK_DGRAM)
 
 ipad = ('192.168.1.161',7777)
 
-CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_neutral","tilt_up","tilt_down","tilt_neutral","HH","HL"]
+CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_center","tilt_forwards","tilt_backwards","tilt_up","HH","HL"]
 
 def iPad(msg):
         server_socket.sendto(msg, ipad)
@@ -62,7 +62,7 @@ class Comms (threading.Thread):
 				motors.move(recv_data)
 				cam.camera(recv_data) 
 				cam.servo(recv_data)
-			if (recv_data == ""):
+			if (recv_data == " "):
 				pass
 
 			elif recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
