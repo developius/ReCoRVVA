@@ -6,6 +6,6 @@ GPIO.setup(11, GPIO.IN)
 
 while True:
 	if(GPIO.input(11) == True):
-		print("ON")
+		print("switch ON")
 	else:
-		print("OFF")
+		print("switch OFF")
