@@ -11,6 +11,7 @@ from termcolor import colored
 
 address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
+server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
 ipad = ('192.168.1.161',7777)
 
@@ -29,7 +30,7 @@ class Comms (threading.Thread):
 			server_socket.bind(address)
 		except:
 		        print colored("Address already in use", 'red')
-		        server_socket.close()
+			server_socket.close()
 		        sys.exit(0)
 		print colored("Socket ready", 'blue')
 

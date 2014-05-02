@@ -6,7 +6,7 @@ def read(fname):
 
 setup(name='ReCoRVVA_server',
       version='1.0',
-      py_modules=['main','comms','motors','sensors','dhtreader','cam','startstream','install_termcolor'],
+      py_modules=['main','comms','motors','sensors','dhtreader','cam','startstream','install_termcolor','startup'],
       description='ReCoRVVA connection API and wrapper for Python',
       author='F. Anderson, B. James',
       author_email='finnian@fxapi.co.uk, benji@fxapi.co.uk',

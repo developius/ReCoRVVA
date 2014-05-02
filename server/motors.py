@@ -1,22 +1,20 @@
 #!/usr/bin/python
 #---------------------------------------------------------------------------------------------------------+
 #						motors.py						  |
-# Drives the motors
-# (c) 2014 A. Ledesma (monkeeyman@hotmail.co.uk)                                                          |
+# Drives the motors											  |
+# (c) 2014 F. Anderson (finnian@fxapi.co.uk & A. Ledesma (monkeeyman@hotmail.co.uk)                       |
 #---------------------------------------------------------------------------------------------------------+
 
 import RPi.GPIO as GPIO
 from termcolor import colored
-import time
-import comms
+import time, comms
 
 GPIO.setmode(GPIO.BOARD)
-T = "True"
-F = "False"
-Pin1 = 22  # right 1, pin 25, turn left (forwards)
-Pin2 = 18  # right 2, pin 24, turn left (backwards)
-Pin3 = 12  # left 1, pin 18, turn right (backwards)
-Pin4 = 16  # left 2, pin 23, turn right (forwards)
+GPIO.setwarnings(True)
+Pin1 = 22  # right 1, gp pin 25, no 22
+Pin2 = 18  # right 2, gp pin 24, no 18
+Pin3 = 12  # left 1, gp pin 18, no 12
+Pin4 = 16  # left 2, gp pin 23, no 16
 GPIO.setup(Pin1, GPIO.OUT)
 GPIO.setup(Pin2, GPIO.OUT)
 GPIO.setup(Pin3, GPIO.OUT)
@@ -25,35 +23,47 @@ GPIO.setup(Pin4, GPIO.OUT)
 def drive(pin,state):
         GPIO.output(pin,state)
 
-def left():
+def stop():
+        drive(Pin1, False)
+        drive(Pin2, False)
+        drive(Pin3, False)
+        drive(Pin4, False)
+
+def forwards():
 	drive(Pin1, True)
 	drive(Pin2, False)
-	drive(Pin3, False)
+	drive(Pin3, True)
 	drive(Pin4, False)
 
-def right():
+def backwards():
 	drive(Pin1, False)
-	drive(Pin2, False)
+	drive(Pin2, True)
 	drive(Pin3, False)
 	drive(Pin4, True)
 
-def forwards():
+def right():
 	drive(Pin1, True)
         drive(Pin2, False)
         drive(Pin3, False)
         drive(Pin4, True)
 
-def backwards():
+def left():
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, True)
 	drive(Pin4, False)
 
-def stop():
-	drive(Pin1, False)
-        drive(Pin2, False)
-        drive(Pin3, False)
-        drive(Pin4, False)
+stop()
+time.sleep(2)
+left()
+time.sleep(2)
+right()
+time.sleep(2)
+forwards()
+time.sleep(2)
+backwards()
+time.sleep(2)
+stop()
 
 def move(d):
 	if (d == "F") or (d == "W"):
@@ -78,5 +88,5 @@ def move(d):
 
 	if (d == "Stop") or (d == "S"):
 		stop()
-                comms.sendToUI("Received Stop - Houston, we have a problem!")
-                print colored("Received Stop - Houston, we have a problem!", 'yellow')
+                comms.sendToUI("Received Stop")
+                print colored("Received Stop", 'yellow')
