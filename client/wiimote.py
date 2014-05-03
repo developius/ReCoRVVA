@@ -130,8 +130,3 @@ while True:
     print("Button B pressed")
     recorvva.send_msg("S")
     time.sleep(button_delay)
-
-  if (buttons & cwiid.BTN_PLUS):
-    print("Connecting")
-    recorvva.connect()
-    time.sleep(button_delay)
