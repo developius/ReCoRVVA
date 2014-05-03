@@ -56,6 +56,7 @@ def connect():
 		client_socket.connect((vpn))
 		client_socket.sendto("Client connected", vpn)
 		client_socket.sendto(" ", vpn)
+                print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
 	except:
 		print colored("'fxapi' as address failed", 'red')
 		try:
@@ -76,7 +77,7 @@ def connect():
 			print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
 	                address = fxapi
 
-		print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+		
                 address = fxapiL
 
 	print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
