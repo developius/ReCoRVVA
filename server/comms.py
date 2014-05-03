@@ -3,7 +3,6 @@
 #                                               comms.py                                                  |
 # Handles the communication through a Python socket							  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
-#       Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
 #---------------------------------------------------------------------------------------------------------+
 
 from socket import *
@@ -12,20 +11,11 @@ from termcolor import colored
 
 address = ('0.0.0.0', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
-
-try:
-	server_socket.bind(address)
-
-except:
-	print colored("Address already in use", 'red')
-	server_socket.close()
-	sys.exit(0)
-
-print colored("Socket ready", 'blue')
+server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
 ipad = ('192.168.1.161',7777)
 
-CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_neutral","tilt_up","tilt_down","tilt_neutral","HH","HL"]
+CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_center","tilt_forwards","tilt_backwards","tilt_up","HH","HL"]
 
 def iPad(msg):
         server_socket.sendto(msg, ipad)
@@ -36,13 +26,25 @@ def sendToUI(msg):
 
 class Comms (threading.Thread):
         def run (self):
+		try:
+			server_socket.bind(address)
+		except:
+		        print colored("Address already in use", 'red')
+			server_socket.close()
+		        sys.exit(0)
+		print colored("Socket ready", 'blue')
+
                 while True:
 			recv_data, addr = server_socket.recvfrom(2048)
 			hostIP = addr[0]
-			host = gethostbyaddr(hostIP)[0]
+			try:
+				host = gethostbyaddr(hostIP)[0]
+			except:
+				host = hostIP
+
 			port = addr[1]
 	#		print("Address: " + str(addr))
-			print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
+	#		print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
 			if (host == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "localhost" or "fxapi"):
 				pass
 			else:	# It's malicious
@@ -61,7 +63,7 @@ class Comms (threading.Thread):
 				motors.move(recv_data)
 				cam.camera(recv_data) 
 				cam.servo(recv_data)
-			if (recv_data == ""):
+			if (recv_data == " "):
 				pass
 
 			elif recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
