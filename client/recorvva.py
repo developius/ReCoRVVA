@@ -4,7 +4,7 @@
 # API and wrapper for communication with the RecoRVVA via a Python socket						  |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #---------------------------------------------------------------------------------------------------------+
- 
+  
 from socket import *
 from time import sleep
 from termcolor import colored
@@ -43,42 +43,44 @@ def commands():
 	print colored("CamOff		Turn off camera", 'blue')
 	print colored("pan_left	Pan camera left", 'blue')
 	print colored("pan_right	Pan camera right", 'blue')
-	print colored("pan_neutral	Pan camera to center", 'blue')
-	print colored("tilt_up		Tilt the camera up", 'blue')
-	print colored("tilt_down	Tilt the camera down", 'blue')
-	print colored("tilt_neutral	Tilt camera up", 'blue')
+	print colored("pan_center	Pan camera to center", 'blue')
+	print colored("tilt_forwards	Tilt the camera forwards", 'blue')
+	print colored("tilt_backwards	Tilt the camera backwards", 'blue')
+	print colored("tilt_up   	Tilt camera up", 'blue')
 	print colored("HH		Turn headlights on", 'blue')
 	print colored("HL		Turn headlights off", 'blue')
 
 def connect():
 	global address
 	try:
-		client_socket.connect(fxapi)
-		client_socket.sendto("Client connected", fxapi)
-		client_socket.sendto(" ", fxapi)
-		print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
-		address = fxapi
+		client_socket.connect((vpn))
+		client_socket.sendto("Client connected", vpn)
+		client_socket.sendto(" ", vpn)
 	except:
 		print colored("'fxapi' as address failed", 'red')
 		try:
-	                client_socket.connect(fxapiL)
+	                client_socket.connect((fxapiL))
         	        client_socket.sendto("Client connected", fxapiL)
 			client_socket.sendto(" ", fxapiL)
-       		        print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
-			address = fxapiL
 		except:
 			print colored("'fxapi.local' as address failed", 'red')
 			try:
-		                client_socket.connect(vpn)
-		                client_socket.sendto("Client connected", vpn)
-				client_socket.sendto(" ", vpn)
-		                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
-				address = vpn
+		                client_socket.connect((fxapi))
+		                client_socket.sendto("Client connected", fxapi)
+				client_socket.sendto(" ", fxapi)
 			except:
 				print colored("'25.110.219.165' (VPN) as address failed", 'red')
 				print colored("Could not connect to ReCoRVVA",'red')
 				sys.exit(0)
 
+			print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+	                address = fxapi
+
+		print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+                address = fxapiL
+
+	print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+	address = vpn
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	send_msg("Client disconnected")

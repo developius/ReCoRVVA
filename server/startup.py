@@ -3,7 +3,6 @@
 #						main.py							  |
 # Hamdles the multithreading and the other scripts.                                                       |
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk) and B. James (musicboyben1999@gmail.com)	                  |
-#	Thanks for contribution to A. Ledesma (monkeeyman@hotmail.co.uk)                                  |
 #---------------------------------------------------------------------------------------------------------+
 
 # Import the various modules
@@ -23,16 +22,17 @@ GPIO.setup(12,GPIO.OUT)
 GPIO.setup(3,GPIO.OUT)
 GPIO.setup(5,GPIO.OUT)
 
-print colored("Robot ping and control script, written in Python", 'magenta')
-print colored("Let's go!\n", 'magenta')
+def start():
+	print colored("Robot ping and control script, written in Python", 'magenta')
+	print colored("Let's go!\n", 'magenta')
 
-#Start the camera feed
-cam.camera("CamOn")
+	#Start the camera feed
+	cam.camera("CamOn")
 
-print colored("Leaving time for camera warmup, please wait", 'red')
-time.sleep(2)
+	print colored("Leaving time for camera warmup, please wait", 'red')
+	time.sleep(1)
 
 #Start Sensors and Communication threads
-comms.Comms().start()
-sensors.Ping().start()
-sensors.Temp().start()
+#comms.Comms().start()
+#sensors.Ping().start()
+#sensors.Temp().start()

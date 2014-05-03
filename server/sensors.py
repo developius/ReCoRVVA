@@ -1,13 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/python 
 #---------------------------------------------------------------------------------------------------------+
-#                                               ping.py                                                   |
+#                                               sensors.py                                                |
 # Gets the ping from an ultrasonic sensor and the temperature and humididty from a DHT-11 sensor	  |
-# (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
-#       Thanks for contribution to B. James (benji@fxapi.co.uk) and A. Ledesma (monkeeyman@hotmail.co.uk) |
+# (c) 2014 F. Anderson (finnian@fxapi.co.uk) and  B. James (musicboyben@gmail.com)	                  |
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
-import threading, time, comms, motors, socket, dhtreader, sys
+import threading, time, comms, motors, startup, socket, dhtreader, sys, os
 from termcolor import colored
 from collections import deque
 import RPi.GPIO as GPIO
@@ -26,7 +25,12 @@ GPIO.setup(trig, GPIO.OUT)
 GPIO.setup(echo, GPIO.IN)
 GPIO.setup(tempPin, GPIO.IN)
 
+GPIO.setup(11, GPIO.IN)
+status = 0
+
 last3 = deque(maxlen=3)
+
+############################################ Ping sensor thread ###########################################################
 
 class Ping (threading.Thread):
         def run (self):
@@ -61,6 +65,10 @@ class Ping (threading.Thread):
 	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
 
+
+############################################ Temperature sensor thread ####################################################
+
+
 class Temp (threading.Thread):
         def run (self):
 		print colored("Starting temperature and humidity sensor", 'green')
@@ -83,3 +91,22 @@ class Temp (threading.Thread):
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
 			else:
 				time.sleep(3)
+
+
+class Switch (threading.Thread):
+        def run (self):
+                global status
+                while True:
+                        if(GPIO.input(11) == True and status == 0):
+                                print("switch ON and recorvva is off - starting ReCoRVVA")
+                                status = 1
+				startup.start()
+                                comms.Comms().start()
+                                Ping().start()
+                                Temp().start()
+
+                        if(GPIO.input(11) == False and status == 1):
+                                print("switch OFF and recorvva on - killing ReCoRVVA")
+				status = 0
+				os.system("for x in `jobs -p`; do sudo kill -9 $x; done; sudo killall python")
+                                sys.exit()

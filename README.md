@@ -1,19 +1,9 @@
-source
-======
+ReCoRVVA
+========
 
-Source code for the ReCoRVVA robot. Also acts as a server.
+Source code for CREST project in two parts: server and client.
+The server is hosted on a raspberry pi acting as a drive computer for ReCoRVVA, and the client is another Raspberry pi with an xbox controller or wiimote connected.
 
-Note: requires Python module 'termcolor' and python library "cwiid".
-Download termcolour here: https://pypi.python.org/packages/source/t/termcolor/termcolor-1.1.0.tar.gz
-Then run:
-tar zxvf termcolor-1.1.0.tar.gz && cd termcolor-1.1.0/ && sudo ./setup.py build && sudo ./setup.py install
+ReCoRVVA stands for Remote Controlled Robot Vehicle for Various Applications.
+ 
 
-To install "cwiid" run "sudo apt-get install cwiid".
-
-main.py -> handles all the scripts
-comms.py -> handles communication through a Python socket
-ping.py -> gets the ping and uses a module in comms.py to send it to who needs it
-motors.py -> controls the motors
-wiimote.py -> gets data from Wii remote and sends it to the Python socket
-xbox.py -> gets the data from an Xbox controller and sends it to the Python socket
-startstream.sh -> starts the camera stream
