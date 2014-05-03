@@ -40,7 +40,7 @@ time.sleep(1)
 wm.rumble = 0
 
 print("Wii Remote connected...\n")
-print("You are now controlling ReCorVVa!\n")
+print("You are now controlling ReCoRVVa!\n")
 print("Press PLUS and MINUS together to disconnect and quit.\n")
 
 #turn on reporting mode
