@@ -64,7 +64,7 @@ class Ping (threading.Thread):
 	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
 	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
-
+				motors.stop()
 
 ############################################ Temperature sensor thread ####################################################
 
