@@ -53,18 +53,6 @@ def left():
 	drive(Pin3, True)
 	drive(Pin4, False)
 
-stop()
-time.sleep(2)
-left()
-time.sleep(2)
-right()
-time.sleep(2)
-forwards()
-time.sleep(2)
-backwards()
-time.sleep(2)
-stop()
-
 def move(d):
 	if (d == "F") or (d == "W"):
 		forwards()

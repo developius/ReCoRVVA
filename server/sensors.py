@@ -6,8 +6,9 @@
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
-import threading, time, comms, motors, startup, socket, dhtreader, sys, os
+import threading, time, comms, cam, motors, startup, socket, dhtreader, sys, os
 from termcolor import colored
+from itertools import repeat
 from collections import deque
 import RPi.GPIO as GPIO
 from random import randrange
@@ -24,6 +25,10 @@ GPIO.setwarnings(False)
 GPIO.setup(trig, GPIO.OUT)
 GPIO.setup(echo, GPIO.IN)
 GPIO.setup(tempPin, GPIO.IN)
+
+headlights = 7
+GPIO.setup(headlights, GPIO.OUT)
+GPIO.output(headlights, False)
 
 GPIO.setup(11, GPIO.IN)
 status = 0
@@ -92,7 +97,6 @@ class Temp (threading.Thread):
 			else:
 				time.sleep(3)
 
-
 class Switch (threading.Thread):
         def run (self):
                 global status
@@ -100,6 +104,13 @@ class Switch (threading.Thread):
                         if(GPIO.input(11) == True and status == 0):
                                 print("switch ON and recorvva is off - starting ReCoRVVA")
                                 status = 1
+				times = 3
+				while times != 0:
+				        GPIO.output(headlights, True)
+				        time.sleep(0.25)
+				        GPIO.output(headlights, False)
+				        time.sleep(0.25)
+				        times = times - 1
 				startup.start()
                                 comms.Comms().start()
                                 Ping().start()
@@ -108,5 +119,12 @@ class Switch (threading.Thread):
                         if(GPIO.input(11) == False and status == 1):
                                 print("switch OFF and recorvva on - killing ReCoRVVA")
 				status = 0
+				times = 5
+				while times != 0:
+                                        GPIO.output(headlights, True)
+                                        time.sleep(0.25)
+                                        GPIO.output(headlights, False)
+                                        time.sleep(0.25)
+                                        times = times - 1
 				os.system("for x in `jobs -p`; do sudo kill -9 $x; done; sudo killall python")
                                 sys.exit()
