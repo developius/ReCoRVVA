@@ -6,7 +6,7 @@
 #---------------------------------------------------------------------------------------------------------+
 
 from termcolor import colored
-import comms, os
+import comms, os, time
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
