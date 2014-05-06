@@ -6,10 +6,10 @@
 #---------------------------------------------------------------------------------------------------------+
 
 from socket import *
-import sys, select, threading, motors, cam
+import sys, select, threading, motors, cam, os
 from termcolor import colored
 
-address = ('0.0.0.0', 7777)
+address = ('', 7777)
 server_socket = socket(AF_INET, SOCK_DGRAM)
 server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
@@ -31,10 +31,17 @@ class Comms (threading.Thread):
 		except:
 		        print colored("Address already in use", 'red')
 			server_socket.close()
-		        sys.exit(0)
+		        sys.exit()
+
 		print colored("Socket ready", 'blue')
 
                 while True:
+			input = raw_input("<TERMINAL> ")
+			if input == "exit":
+				os.system("sudo killall python")
+			if input == "close":
+				server_socket.close()
+				sys.exit()
 			recv_data, addr = server_socket.recvfrom(2048)
 			hostIP = addr[0]
 			try:
