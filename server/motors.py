@@ -10,7 +10,7 @@ from termcolor import colored
 import time, comms
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(True)
+GPIO.setwarnings(False)
 Pin1 = 22  # right 1, gp pin 25, no 22
 Pin2 = 18  # right 2, gp pin 24, no 18
 Pin3 = 12  # left 1, gp pin 18, no 12
