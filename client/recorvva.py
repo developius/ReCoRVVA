@@ -17,6 +17,7 @@ fxapiL = ("fxapi.local", port)
 address = 0
 
 client_socket = socket(AF_INET, SOCK_DGRAM)
+#client_socket = socket()
 
 def help():
 	print colored("ReCoRVVA - Remote Controlled Robot Vehicle for Various Applications: help", 'blue')
@@ -56,31 +57,28 @@ def connect():
 		client_socket.connect((vpn))
 		client_socket.sendto("Client connected", vpn)
 		client_socket.sendto(" ", vpn)
-	except:
-		print colored("'VPN' as address failed", 'red')
+		print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+               	address = vpn
+	except Exception, e:
+		print colored("'VPN' as address failed: " + str(e), 'red')
 		try:
 	                client_socket.connect((fxapiL))
         	        client_socket.sendto("Client connected", fxapiL)
 			client_socket.sendto(" ", fxapiL)
-		except:
-			print colored("'fxapi.local' as address failed", 'red')
+			print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
+                        address = fxapiL
+		except Exception, e:
+			print colored("'fxapi.local' as address failed: " + str(e), 'red')
 			try:
 		                client_socket.connect((fxapi))
 		                client_socket.sendto("Client connected", fxapi)
 				client_socket.sendto(" ", fxapi)
-			except:
-				print colored("'25.110.219.165' (VPN) as address failed", 'red')
+				print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
+                	        address = fxapi
+			except Exception, e:
+				print colored("'25.110.219.165' (VPN) as address failed: " + str(e), 'red')
 				print colored("Could not connect to ReCoRVVA",'red')
 				sys.exit(0)
-
-			print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
-	                address = fxapi
-
-		print colored("Connected to ReCoRVVA on " + str(fxapiL), 'blue')
-                address = fxapiL
-
-	print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
-	address = vpn
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
