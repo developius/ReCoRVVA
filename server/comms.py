@@ -28,20 +28,20 @@ class Comms (threading.Thread):
         def run (self):
 		try:
 			server_socket.bind(address)
-		except:
-		        print colored("Address already in use", 'red')
+		except Exception, e:
+		        print colored("Address already in use: " + str(e), 'red')
 			server_socket.close()
 		        sys.exit()
 
 		print colored("Socket ready", 'blue')
 
                 while True:
-			input = raw_input("<TERMINAL> ")
-			if input == "exit":
-				os.system("sudo killall python")
-			if input == "close":
-				server_socket.close()
-				sys.exit()
+			#input = raw_input("<TERMINAL> ")
+			#if input == "exit":
+			#	os.system("sudo killall python")
+			#if input == "close":
+			#	server_socket.close()
+			#	sys.exit()
 			recv_data, addr = server_socket.recvfrom(2048)
 			hostIP = addr[0]
 			try:
