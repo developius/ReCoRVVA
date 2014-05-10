@@ -6,7 +6,7 @@ def read(fname):
 
 setup(name='ReCoRVVA_client',
       version='1.0',
-      py_modules=['recorvva','wiimote','xbox','install_termcolor'],
+      py_modules=['recorvva','wiimote','xbox','install_termcolor','client'],
       description='ReCoRVVA connection API and wrapper for Python',
       author='F. Anderson, B. James, A. Ledesma',
       author_email='finnian@fxapi.co.uk, benji@fxapi.co.uk, monkeeyman@hotmail.co.uk',
