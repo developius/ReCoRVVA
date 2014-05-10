@@ -10,70 +10,61 @@ import sys, select, threading, motors, cam, os
 from termcolor import colored
 
 address = ('', 7777)
-server_socket = socket(AF_INET, SOCK_DGRAM)
+server_socket = socket(AF_INET, SOCK_STREAM)
 server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-
-ipad = ('192.168.1.161',7777)
 
 CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_center","tilt_forwards","tilt_backwards","tilt_up","HH","HL"]
 
-def iPad(msg):
-        server_socket.sendto(msg, ipad)
-
 def sendToUI(msg):
-	recv_data, addr = server_socket.recvfrom(2048)
-        server_socket.sendto(msg,addr)
+	try:
+		recv_data, addr = server_socket.recvfrom(2048)
+		server_socket.sendto(msg,addr)
+	except Exception, e:
+		print("Could not send message")
 
 class Comms (threading.Thread):
         def run (self):
 		try:
 			server_socket.bind(address)
 		except Exception, e:
-		        print colored("Address already in use: " + str(e), 'red')
+		        print colored("Address already in use", 'red')
 			server_socket.close()
 		        sys.exit()
 
+		server_socket.listen(2)
+
 		print colored("Socket ready", 'blue')
+#		Console().start()
 
-                while True:
-			#input = raw_input("<TERMINAL> ")
-			#if input == "exit":
-			#	os.system("sudo killall python")
-			#if input == "close":
-			#	server_socket.close()
-			#	sys.exit()
-			recv_data, addr = server_socket.recvfrom(2048)
-			hostIP = addr[0]
-			try:
-				host = gethostbyaddr(hostIP)[0]
-			except:
-				host = hostIP
+		while True:
+			client_socket, addr = server_socket.accept()
+			client_socket.send("Welcome")
+   		        hostIP = addr[0]
+                	port = addr[1]
 
-			port = addr[1]
-	#		print("Address: " + str(addr))
-	#		print("Host's IP: " + str(hostIP) + ", Hostname: " + str(host) + ", Port: " + str(port))
-			if (host == "Xav'sPad" or "BenPiOne" or "Guspi" or "snail" or "localhost" or "fxapi"):
+                	try:
+                        	host = gethostbyaddr(hostIP)[0]
+                	except:
+                        	host = hostIP
+                	print colored("Got connection from: " + host, 'blue')
+
+			if (host == "Xav'sPad" or host == "pimine.local" or host == "BenPiOne" or host == "Guspi" or host == "snail" or host == "localhost"):
 				pass
 			else:	# It's malicious
-				print colored("Unauthorised connection attempted - " + str(host) + " - closing socket", 'red')
-				server_socket.close()
-				print colored("Socket closed to everyone", 'red')
-				break
+				print colored("Unauthorised connection attempted - " + str(host) + " - closing their socket", 'red')
+				client_socket.close()
+				print colored("Socket closed to client", 'red')
 
-			if recv_data == "Client connected":
-	          		print colored("Client " + str(host) + " connected - and is friendly", 'red')
-				sendToUI("Welcome!")
-			if recv_data == "Client disconnected":
-				print colored("Client " + str(host) + " disconnected", 'red')
-				sendToUI("Goodbye!")
-			if (recv_data in CMDS) == True:
-				motors.move(recv_data)
-				cam.camera(recv_data) 
-				cam.servo(recv_data)
-			if (recv_data == " "):
-				pass
+			while True:
+				try:
+        	                        recv_data = client_socket.recv(2048)
+        	                except:
+                	                recv_data = ""
 
-			elif recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
-				print colored("Received: %s" % recv_data, 'blue') # print out the message
-	#                        print colored("Length: %.0f" % len(recv_data), 'blue') # print out the length of the message
-	                        print colored("Sender hostname: " + str(host), 'blue') # print out the sender's IP
+				if (recv_data in CMDS) == True:
+					motors.move(recv_data)
+					cam.camera(recv_data) 
+					cam.servo(recv_data)
+
+				if recv_data not in CMDS and recv_data != " " and recv_data != "": # if it's not any of the above, it's something else and we need to know what
+					print colored("Received: '" + recv_data + "' from '" + str(host) + "'", 'blue')
