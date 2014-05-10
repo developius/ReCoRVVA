@@ -20,16 +20,9 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 Neutral = 1500
-Backwards = Left = 2500 # 2k
-Forwards = Right = 500 # 1k
-#GPIO.setup(13, GPIO.OUT)
-#GPIO.setup(15, GPIO.OUT)
-#tilt = GPIO.PWM(13,50)
-#pan = GPIO.PWM(15,50)
-#pan.start(servoNeutral)
-#tilt.start(servoNeutral)
+Backwards = Left = 2500
+Forwards = Right = 500
 headlights = 7
-
 
 GPIO.setup(headlights, GPIO.OUT)
 GPIO.output(headlights, False)

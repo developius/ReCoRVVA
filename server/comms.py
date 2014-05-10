@@ -12,15 +12,15 @@ from termcolor import colored
 address = ('', 7777)
 server_socket = socket(AF_INET, SOCK_STREAM)
 server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+client_socket = ""
 
 CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_center","tilt_forwards","tilt_backwards","tilt_up","HH","HL"]
 
 def sendToUI(msg):
 	try:
-		recv_data, addr = server_socket.recvfrom(2048)
-		server_socket.sendto(msg,addr)
+		client_socket.send(msg)
 	except Exception, e:
-		print("Could not send message")
+		print("Could not send message: " + str(e))
 
 class Comms (threading.Thread):
         def run (self):
@@ -37,6 +37,7 @@ class Comms (threading.Thread):
 #		Console().start()
 
 		while True:
+			global client_socket
 			client_socket, addr = server_socket.accept()
 			client_socket.send("Welcome")
    		        hostIP = addr[0]

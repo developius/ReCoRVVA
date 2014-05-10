@@ -54,12 +54,12 @@ def connect():
 	try:
 		client_socket.connect((fxapi))
 	except Exception, e:
-		print colored("'" + str(fxapi) + "' as address failed: " + str(e), 'red')
+		print colored("'" + str(fxapi) + "' as address failed", 'red')
 		try:
 	                client_socket.connect((vpn))
 		except Exception, e:
-			print colored("'" + str(vpn) + "' (VPN) as address failed: " + str(e), 'red')
-			print colored("Could not connect to ReCoRVVA, oh well",'red')
+			print colored("'" + str(vpn) + "' (VPN) as address failed" , 'red')
+			print colored("Could not connect to ReCoRVVA",'red')
 			sys.exit()
 
                 print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
@@ -70,8 +70,6 @@ def connect():
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
-	send_msg("Client disconnected")
-#	stop_data()
 	client_socket.shutdown(0)
 	client_socket.close()
 
@@ -80,7 +78,7 @@ def send_msg(msg):
 		client_socket.sendto(msg, address)
 		print colored("Sent '%s' to ReCoRVVA" % msg, 'green')
 	except Exception, e:
-		print colored("Could not send message: " + str(e), 'blue')
+		print colored("Could not send message: " + str(e), 'red')
 
 def get_data():
 	data_thread().start()
