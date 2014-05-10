@@ -41,7 +41,7 @@ class Ping (threading.Thread):
         def run (self):
                 while True:
 			GPIO.output(trig, False)
-			time.sleep(1)
+			time.sleep(0.25)
                         GPIO.output(trig, True)
                         time.sleep(0.00001)
                         GPIO.output(trig, False)
