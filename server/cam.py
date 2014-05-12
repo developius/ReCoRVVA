@@ -6,21 +6,22 @@
 #---------------------------------------------------------------------------------------------------------+
 
 from termcolor import colored
-import comms, os
+import comms, os, time
 import RPi.GPIO as GPIO
+from pigpio import set_servo_pulsewidth as servo_mv
+import pigpio
+
+pigpio.start()
+
+pan = 22
+tilt = 27
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
-servoNeutral = 7.5
-servoBackwards = servoLeft = 12.5
-servoForwards = servoRight = 2.5
-GPIO.setup(13, GPIO.OUT)
-GPIO.setup(15, GPIO.OUT)
-tilt = GPIO.PWM(13,50)
-pan = GPIO.PWM(15,50)
-pan.start(servoNeutral)
-tilt.start(servoNeutral)
+Neutral = 1500
+Backwards = Left = 2500
+Forwards = Right = 500
 headlights = 7
 
 GPIO.setup(headlights, GPIO.OUT)
@@ -48,24 +49,24 @@ def servo(direction):
 	if direction == "pan_left":
 		print colored("Panning left", 'yellow')
 		comms.sendToUI("Panning left")
-		pan.ChangeDutyCycle(servoLeft)
+		servo_mv(pan, Left)
 	if direction == "pan_right":
 		print colored("Panning right", 'yellow')
 		comms.sendToUI("Panning right")
-		pan.ChangeDutyCycle(servoRight)
+		servo_mv(pan, Right)
 	if direction == "pan_center":
 		print colored("Panning to center", 'yellow')
 		comms.sendToUI("Panning to center")
-		pan.ChangeDutyCycle(servoNeutral)
+		servo_mv(pan, Neutral)
 	if direction == "tilt_forwards":
 		print colored("Tilting forwards", 'yellow')
 		comms.sendToUI("Tiliting forwards")
-		tilt.ChangeDutyCycle(servoForwards)
+		servo_mv(tilt, Forwards)
 	if direction == "tilt_backwards":
 		print colored("Tilting backwards", 'yellow')
 		comms.sendToUI("Tiliting backwards")
-		tilt.ChangeDutyCycle(servoBackwards)
+		servo_mv(tilt, Backwards)
 	if direction == "tilt_up":
 		print colored("Tilting to center", 'yellow')
 		comms.sendToUI("Tiliting to center")
-		tilt.ChangeDutyCycle(servoNeutral)
+		servo_mv(tilt, Neutral)

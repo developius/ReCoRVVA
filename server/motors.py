@@ -10,7 +10,7 @@ from termcolor import colored
 import time, comms
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(True)
+GPIO.setwarnings(False)
 Pin1 = 22  # right 1, gp pin 25, no 22
 Pin2 = 18  # right 2, gp pin 24, no 18
 Pin3 = 12  # left 1, gp pin 18, no 12
@@ -52,18 +52,6 @@ def left():
 	drive(Pin2, True)
 	drive(Pin3, True)
 	drive(Pin4, False)
-
-stop()
-time.sleep(2)
-left()
-time.sleep(2)
-right()
-time.sleep(2)
-forwards()
-time.sleep(2)
-backwards()
-time.sleep(2)
-stop()
 
 def move(d):
 	if (d == "F") or (d == "W"):
