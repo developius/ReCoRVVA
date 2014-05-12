@@ -84,22 +84,22 @@ while True:
     recorvva.send_msg("Couldn't find a wiimote")
 
   if (buttons & cwiid.BTN_LEFT):
-    print("down pressed")
+    print("tilting camera down")
     recorvva.send_msg("tilt_down")
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
-    print("up pressed")
+    print("tilting camera up")
     recorvva.send_msg("tilt_up")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_UP):
-    print("left pressed")
+    print("panning camera left")
     recorvva.send_msg("pan_left")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_DOWN):
-    print("right pressed")
+    print("panning camera right")
     recorvva.send_msg("pan_right")
     time.sleep(button_delay)
 
