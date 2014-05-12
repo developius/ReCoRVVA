@@ -16,6 +16,9 @@ pigpio.start()
 pan = 22
 tilt = 27
 
+pan_var = 1500
+tilt_var = 1000
+
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
@@ -45,28 +48,26 @@ def camera(status):
 		GPIO.output(headlights, True)
 		comms.sendToUI("Headlights on")
 
-def servo(direction):
-	if direction == "pan_left":
-		print colored("Panning left", 'yellow')
-		comms.sendToUI("Panning left")
-		servo_mv(pan, Left)
-	if direction == "pan_right":
-		print colored("Panning right", 'yellow')
+def servo(msg):
+	global pan_var
+	global tilt_var
+	if msg == "pan_left":
+		pan_var = pan_var + 100
+		print colored("Panning left " + pan_var, 'yellow')
+		servo_mv(pan, pan_var)
 		comms.sendToUI("Panning right")
-		servo_mv(pan, Right)
-	if direction == "pan_center":
-		print colored("Panning to center", 'yellow')
-		comms.sendToUI("Panning to center")
-		servo_mv(pan, Neutral)
-	if direction == "tilt_forwards":
-		print colored("Tilting forwards", 'yellow')
-		comms.sendToUI("Tiliting forwards")
-		servo_mv(tilt, Forwards)
-	if direction == "tilt_backwards":
-		print colored("Tilting backwards", 'yellow')
-		comms.sendToUI("Tiliting backwards")
-		servo_mv(tilt, Backwards)
-	if direction == "tilt_up":
-		print colored("Tilting to center", 'yellow')
-		comms.sendToUI("Tiliting to center")
-		servo_mv(tilt, Neutral)
+	if msg == "pan_right":
+                pan_var = pan_var - 100
+                print colored("Panning right " + pan_var, 'yellow')
+                servo_mv(pan, pan_var)
+		comms.sendToUI("Panning right")
+	if msg == "tilt_down":
+                tilt_var = tilt_var + 100
+                print colored("Tilt down " + tilt_var, 'yellow')
+                servo_mv(tilt, tilt_var)
+                comms.sendToUI("Tilt down")
+        if msg == "tilt_up":
+                tilt_var = tilt_var - 100
+                print colored("Tilting up " + tilt_var, 'yellow')
+                servo_mv(tilt, tilt_var)
+                comms.sendToUI("Tilting up")

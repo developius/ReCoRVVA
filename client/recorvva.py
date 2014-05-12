@@ -60,14 +60,16 @@ def connect():
 		except Exception, e:
 			print colored("'" + str(vpn) + "' (VPN) as address failed" , 'red')
 			print colored("Could not connect to ReCoRVVA",'red')
-			sys.exit()
+			client_socket.close()
+			return False
 
                 print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
                 address = vpn
+		return True
 
         print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
         address = fxapi
-
+	return True
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	client_socket.shutdown(0)
@@ -91,7 +93,7 @@ class data_thread (threading.Thread):
 		while True:
 			try:
 				recv_data = client_socket.recv(2048)
-				if recv_data != "" and recv_data != "":
+				if recv_data != " " and recv_data != "":
 					print colored("\n<SERVER> " + recv_data, 'red')
 			except Exception, e:
 				print colored("Could not get data: " + str(e), 'blue')
