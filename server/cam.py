@@ -53,21 +53,36 @@ def servo(msg):
 	global tilt_var
 	if msg == "pan_left":
 		pan_var = pan_var + 100
-		print colored("Panning left " + pan_var, 'yellow')
-		servo_mv(pan, pan_var)
-		comms.sendToUI("Panning right")
+		if pan_var < 2500 and pan_var > 500:
+			print colored("Panning left " + str(pan_var), 'yellow')
+			servo_mv(pan, pan_var)
+			comms.sendToUI("Panning left")
+		else:
+			pan_var = pan_var - 100
+
 	if msg == "pan_right":
-                pan_var = pan_var - 100
-                print colored("Panning right " + pan_var, 'yellow')
-                servo_mv(pan, pan_var)
-		comms.sendToUI("Panning right")
-	if msg == "tilt_down":
-                tilt_var = tilt_var + 100
-                print colored("Tilt down " + tilt_var, 'yellow')
-                servo_mv(tilt, tilt_var)
-                comms.sendToUI("Tilt down")
-        if msg == "tilt_up":
-                tilt_var = tilt_var - 100
-                print colored("Tilting up " + tilt_var, 'yellow')
-                servo_mv(tilt, tilt_var)
-                comms.sendToUI("Tilting up")
+		pan_var = pan_var - 100
+		if pan_var < 2500 and pan_var > 500:
+	                print colored("Panning right " + str(pan_var), 'yellow')
+	                servo_mv(pan, pan_var)
+			comms.sendToUI("Panning right")
+		else:
+                        pan_var = pan_var + 100
+
+	if msg == "tilt_backwards":
+		tilt_var = tilt_var + 100
+		if tilt_var < 2500 and tilt_var > 500:
+	                print colored("Tilting backwards " + str(tilt_var), 'yellow')
+	                servo_mv(tilt, tilt_var)
+	                comms.sendToUI("Tilting backwards")
+		else:
+                        tilt_var = tilt_var + 100
+
+        if msg == "tilt_forwards":
+		tilt_var = tilt_var - 100
+		if tilt_var < 2500 and tilt_var > 500:
+	                print colored("Tilting forwards " + str(tilt_var), 'yellow')
+	                servo_mv(tilt, tilt_var)
+	                comms.sendToUI("Tilting forwards")
+		else:
+                        tilt_var = tilt_var + 100
