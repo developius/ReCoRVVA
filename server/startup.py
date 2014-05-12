@@ -27,7 +27,7 @@ def start():
 	print colored("Let's go!\n", 'magenta')
 
 	#Start the camera feed
-#	cam.camera("CamOn")
+	cam.camera("CamOn")
 
 	print colored("Leaving time for camera warmup, please wait", 'red')
 	time.sleep(1)

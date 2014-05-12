@@ -49,7 +49,7 @@ class Comms (threading.Thread):
                         	host = hostIP
                 	print colored("Got connection from: " + host, 'blue')
 
-			if (host == "Xav'sPad" or host == "pimine.local" or host == "BenPiOne" or host == "Guspi" or host == "snail" or host == "localhost"):
+			if (host == "mypi.local" or host == "Xav'sPad" or host == "fxapi.home" or host == "pimine.local" or host == "BenPiOne" or host == "Guspi" or host == "snail" or host == "localhost" or host == "fxapi.local"):
 				pass
 			else:	# It's malicious
 				print colored("Unauthorised connection attempted - " + str(host) + " - closing their socket", 'red')
