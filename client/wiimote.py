@@ -85,12 +85,12 @@ while True:
 
   if (buttons & cwiid.BTN_LEFT):
     print("tilting camera down")
-    recorvva.send_msg("tilt_down")
+    recorvva.send_msg("tilt_forwards")
     time.sleep(button_delay)
 
   if(buttons & cwiid.BTN_RIGHT):
     print("tilting camera up")
-    recorvva.send_msg("tilt_up")
+    recorvva.send_msg("tilt_backwards")
     time.sleep(button_delay)
 
   if (buttons & cwiid.BTN_UP):
