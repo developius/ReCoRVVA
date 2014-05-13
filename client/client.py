@@ -10,6 +10,7 @@ import recorvva
 recorvva.connect()
 
 while True:
+	recorvva.test_conn()
 	input = raw_input("<CLIENT> ")
 	if input == "exit":
 		break

@@ -8,12 +8,12 @@
 from socket import *
 from time import sleep
 from termcolor import colored
-import sys, threading
+import sys, threading, time
 
 port = 7777
 vpn = ("25.110.219.165", port)
 fxapi = ("fxapi.local", port)
-address = 0
+address = fxapi
 
 client_socket = socket(AF_INET, SOCK_STREAM)
 
@@ -60,16 +60,28 @@ def connect():
 		except Exception, e:
 			print colored("'" + str(vpn) + "' (VPN) as address failed" , 'red')
 			print colored("Could not connect to ReCoRVVA",'red')
-			client_socket.close()
+			#client_socket.close()
 			return False
 
                 print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
                 address = vpn
+		test_connection_thread().start()
 		return True
 
         print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
         address = fxapi
+	test_connection_thread().start()
 	return True
+
+def test_conn():
+	try:
+#		client_socket.recv((2048))
+		client_socket.send(" ")
+	except error, e:
+		print colored("Disconnected from ReCoRVVA: " + str(e), 'red')
+		return False
+	return True
+
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
 	client_socket.shutdown(0)
@@ -87,6 +99,12 @@ def get_data():
 
 def stop_data():
 	data_thread()._Thread__stop()
+
+class test_connection_thread (threading.Thread):
+	def run (self):
+		while True:
+			test_conn()
+			time.sleep(1)
 
 class data_thread (threading.Thread):
         def run (self):
