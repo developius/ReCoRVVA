@@ -75,7 +75,7 @@ def connect():
 
 def test_conn():
 	try:
-		client_socket.send(" ")
+		client_socket.send("")
 	except error, e:
 		print colored("Disconnected from ReCoRVVA", 'red')
 		return False
