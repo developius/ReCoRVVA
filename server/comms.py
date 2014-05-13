@@ -66,6 +66,9 @@ class Comms (threading.Thread):
 					motors.move(recv_data)
 					cam.camera(recv_data) 
 					cam.servo(recv_data)
-
-				if recv_data not in CMDS and recv_data != " " and recv_data != "": # if it's not any of the above, it's something else and we need to know what
+				if recv_data == "":
+					pass
+				if recv_data == " ":
+					pass
+				if recv_data not in CMDS: # if it's not any of the above, it's something else and we need to know what
 					print colored("Received: '" + recv_data + "' from '" + str(host) + "'", 'blue')
