@@ -6,7 +6,7 @@
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
-import threading, time, comms, cam, motors, startup, socket, dhtreader, sys, os
+import threading, time, comms, cam, motors, startup, socket, dhtreader, sys, os, numpy
 from termcolor import colored
 from itertools import repeat
 from collections import deque
@@ -55,7 +55,8 @@ class Ping (threading.Thread):
                         distance = timepassed * 17000
 
 			last3.append(distance)
-			avg = round(sum(last3) / len(last3))
+			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
+#			mean = numpy.mean(last3)	     # --|
 
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
