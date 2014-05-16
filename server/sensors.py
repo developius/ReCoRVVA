@@ -6,8 +6,9 @@
 #---------------------------------------------------------------------------------------------------------+
 
 #Import the various modules
-import threading, time, comms, motors, startup, socket, dhtreader, sys, os
+import threading, time, comms, cam, motors, startup, socket, dhtreader, sys, os, numpy
 from termcolor import colored
+from itertools import repeat
 from collections import deque
 import RPi.GPIO as GPIO
 from random import randrange
@@ -25,6 +26,10 @@ GPIO.setup(trig, GPIO.OUT)
 GPIO.setup(echo, GPIO.IN)
 GPIO.setup(tempPin, GPIO.IN)
 
+headlights = 7
+GPIO.setup(headlights, GPIO.OUT)
+GPIO.output(headlights, False)
+
 GPIO.setup(11, GPIO.IN)
 status = 0
 
@@ -36,7 +41,7 @@ class Ping (threading.Thread):
         def run (self):
                 while True:
 			GPIO.output(trig, False)
-			time.sleep(1)
+			time.sleep(0.25)
                         GPIO.output(trig, True)
                         time.sleep(0.00001)
                         GPIO.output(trig, False)
@@ -50,7 +55,10 @@ class Ping (threading.Thread):
                         distance = timepassed * 17000
 
 			last3.append(distance)
-			avg = round(sum(last3) / len(last3))
+			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
+#			mean = numpy.mean(last3)	     # --|
+			avg = round(sum(last3) / len(last3)) # --| FA:which one? avg seems to be more reliable
+#			mean = numpy.mean(last3)	     # --| BJ:Yes keep with avg, it's manual and we have more control
 
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
@@ -64,7 +72,7 @@ class Ping (threading.Thread):
 	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
 	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
-
+				motors.stop()
 
 ############################################ Temperature sensor thread ####################################################
 
@@ -92,6 +100,7 @@ class Temp (threading.Thread):
 			else:
 				time.sleep(3)
 
+############################################# Server switch thread ##########################################################
 
 class Switch (threading.Thread):
         def run (self):
@@ -99,7 +108,15 @@ class Switch (threading.Thread):
                 while True:
                         if(GPIO.input(11) == True and status == 0):
                                 print("switch ON and recorvva is off - starting ReCoRVVA")
+                                print("switch ON and ReCorVVA is off - starting ReCoRVVA")
                                 status = 1
+				times = 3
+				while times != 0:
+				        GPIO.output(headlights, True)
+				        time.sleep(0.25)
+				        GPIO.output(headlights, False)
+				        time.sleep(0.25)
+				        times = times - 1
 				startup.start()
                                 comms.Comms().start()
                                 Ping().start()
@@ -107,6 +124,14 @@ class Switch (threading.Thread):
 
                         if(GPIO.input(11) == False and status == 1):
                                 print("switch OFF and recorvva on - killing ReCoRVVA")
+                                print("switch OFF and ReCoRVVA on - killing ReCoRVVA")
 				status = 0
+				times = 5
+				while times != 0:
+                                        GPIO.output(headlights, True)
+                                        time.sleep(0.25)
+                                        GPIO.output(headlights, False)
+                                        time.sleep(0.25)
+                                        times = times - 1
 				os.system("for x in `jobs -p`; do sudo kill -9 $x; done; sudo killall python")
                                 sys.exit()

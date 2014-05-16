@@ -6,21 +6,25 @@
 #---------------------------------------------------------------------------------------------------------+
 
 from termcolor import colored
-import comms, os
+import comms, os, time
 import RPi.GPIO as GPIO
+from pigpio import set_servo_pulsewidth as servo_mv
+import pigpio
+
+pigpio.start()
+
+pan = 22
+tilt = 27
+
+pan_var = 1500
+tilt_var = 1000
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
-servoNeutral = 7.5
-servoBackwards = servoLeft = 12.5
-servoForwards = servoRight = 2.5
-GPIO.setup(13, GPIO.OUT)
-GPIO.setup(15, GPIO.OUT)
-tilt = GPIO.PWM(13,50)
-pan = GPIO.PWM(15,50)
-pan.start(servoNeutral)
-tilt.start(servoNeutral)
+Neutral = 1500
+Backwards = Left = 2500
+Forwards = Right = 500
 headlights = 7
 
 GPIO.setup(headlights, GPIO.OUT)
@@ -44,28 +48,41 @@ def camera(status):
 		GPIO.output(headlights, True)
 		comms.sendToUI("Headlights on")
 
-def servo(direction):
-	if direction == "pan_left":
-		print colored("Panning left", 'yellow')
-		comms.sendToUI("Panning left")
-		pan.ChangeDutyCycle(servoLeft)
-	if direction == "pan_right":
-		print colored("Panning right", 'yellow')
-		comms.sendToUI("Panning right")
-		pan.ChangeDutyCycle(servoRight)
-	if direction == "pan_center":
-		print colored("Panning to center", 'yellow')
-		comms.sendToUI("Panning to center")
-		pan.ChangeDutyCycle(servoNeutral)
-	if direction == "tilt_forwards":
-		print colored("Tilting forwards", 'yellow')
-		comms.sendToUI("Tiliting forwards")
-		tilt.ChangeDutyCycle(servoForwards)
-	if direction == "tilt_backwards":
-		print colored("Tilting backwards", 'yellow')
-		comms.sendToUI("Tiliting backwards")
-		tilt.ChangeDutyCycle(servoBackwards)
-	if direction == "tilt_up":
-		print colored("Tilting to center", 'yellow')
-		comms.sendToUI("Tiliting to center")
-		tilt.ChangeDutyCycle(servoNeutral)
+def servo(msg):
+	global pan_var
+	global tilt_var
+	if msg == "pan_left":
+		pan_var = pan_var + 100
+		if pan_var < 2500 and pan_var > 500:
+			print colored("Panning left " + str(pan_var), 'yellow')
+			servo_mv(pan, pan_var)
+			comms.sendToUI("Panning left")
+		else:
+			pan_var = pan_var - 100
+
+	if msg == "pan_right":
+		pan_var = pan_var - 100
+		if pan_var < 2500 and pan_var > 500:
+	                print colored("Panning right " + str(pan_var), 'yellow')
+	                servo_mv(pan, pan_var)
+			comms.sendToUI("Panning right")
+		else:
+                        pan_var = pan_var + 100
+
+	if msg == "tilt_backwards":
+		tilt_var = tilt_var + 100
+		if tilt_var < 2500 and tilt_var > 500:
+	                print colored("Tilting backwards " + str(tilt_var), 'yellow')
+	                servo_mv(tilt, tilt_var)
+	                comms.sendToUI("Tilting backwards")
+		else:
+                        tilt_var = tilt_var + 100
+
+        if msg == "tilt_forwards":
+		tilt_var = tilt_var - 100
+		if tilt_var < 2500 and tilt_var > 500:
+	                print colored("Tilting forwards " + str(tilt_var), 'yellow')
+	                servo_mv(tilt, tilt_var)
+	                comms.sendToUI("Tilting forwards")
+		else:
+                        tilt_var = tilt_var + 100
