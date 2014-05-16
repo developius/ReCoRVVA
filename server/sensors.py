@@ -98,6 +98,8 @@ class Temp (threading.Thread):
 			else:
 				time.sleep(3)
 
+############################################# Server switch thread ##########################################################
+
 class Switch (threading.Thread):
         def run (self):
                 global status
