@@ -29,13 +29,13 @@ def stop():
         drive(Pin3, False)
         drive(Pin4, False)
 
-def forwards():
+def backwards():
 	drive(Pin1, True)
 	drive(Pin2, False)
 	drive(Pin3, True)
 	drive(Pin4, False)
 
-def backwards():
+def forwards():
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, False)
