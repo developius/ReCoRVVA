@@ -56,8 +56,6 @@ class Ping (threading.Thread):
 
 			last3.append(distance)
 			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
-#			mean = numpy.mean(last3)	     # --|
-			avg = round(sum(last3) / len(last3)) # --| FA:which one? avg seems to be more reliable
 #			mean = numpy.mean(last3)	     # --| BJ:Yes keep with avg, it's manual and we have more control
 
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
@@ -65,25 +63,14 @@ class Ping (threading.Thread):
 		        pingfile.close()
 
                         if distance > 10 or avg > 10:
-<<<<<<< HEAD
-	#			sys.stdout.write("[PING]  No obstructions: %.1f" % avg + "cms\r")
-	#			sys.stdout.flush()
 				print colored("[PING]  No obstructions: %.1f" % avg + "cms\r", 'green')
+				if comms.test_conn() == True:
+                                        comms.sendToUI("[PING]  No obstructions: %.1f" % avg + "cms\r")
 			else:
-	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
-	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
 				motors.stop()
-=======
-				print colored("[PING]  No obstructions: %.1f" % avg + "cms\r", 'green')
 				if comms.test_conn() == True:
-					comms.sendToUI("[PING]  No obstructions: %.1f" % avg + "cms\r")
-			else:
-				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
-				if comms.test_conn() == True:
-					comms.sendToUI("[PING]  PAY ATTENTION: %.1f" % avg)
-					motors.stop()
->>>>>>> f170faad1d7ad1249e3a5470a4e80fddecd1d964
+                                        comms.sendToUI("[PING]  PAY ATTENTION: %.1f" % avg)
 
 ############################################ Temperature sensor thread ####################################################
 
@@ -98,11 +85,8 @@ class Temp (threading.Thread):
 #				sys.stdout.write("\r[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h)
 #				sys.stdout.flush()
 				print colored("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h), 'green')
-<<<<<<< HEAD
-=======
 				if comms.test_conn() == True:
 					comms.sendToUI("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h))
->>>>>>> f170faad1d7ad1249e3a5470a4e80fddecd1d964
 				dhtfile_t = open('/var/www/crest/dhtfile_t.txt', 'w')
 				dhtfile_t.write(str(t) + "*C")
 				dhtfile_t.close()
@@ -111,17 +95,14 @@ class Temp (threading.Thread):
 				dhtfile_h.close()
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
-<<<<<<< HEAD
 				if h > 50:
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
-=======
 					if comms.test_conn() == True:
 						comms.sendToUI("TEMPERATURE went above 50*C - help!\r")
 				if h > 50:
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
 						comms.sendToUI("HUMIDITY went above 50 - it's gonna rain!\r")
->>>>>>> f170faad1d7ad1249e3a5470a4e80fddecd1d964
 			else:
 				time.sleep(3)
 
@@ -132,8 +113,7 @@ class Switch (threading.Thread):
                 global status
                 while True:
                         if(GPIO.input(11) == True and status == 0):
-                                print("switch ON and recorvva is off - starting ReCoRVVA")
-                                print("switch ON and ReCorVVA is off - starting ReCoRVVA")
+                                print("switch ON and ReCoRVVA is off - starting ReCoRVVA")
                                 status = 1
 				times = 3
 				while times != 0:
@@ -148,7 +128,6 @@ class Switch (threading.Thread):
                                 Temp().start()
 
                         if(GPIO.input(11) == False and status == 1):
-                                print("switch OFF and recorvva on - killing ReCoRVVA")
                                 print("switch OFF and ReCoRVVA on - killing ReCoRVVA")
 				status = 0
 				times = 5
