@@ -105,7 +105,7 @@ class Switch (threading.Thread):
                 global status
                 while True:
                         if(GPIO.input(11) == True and status == 0):
-                                print("switch ON and recorvva is off - starting ReCoRVVA")
+                                print("switch ON and ReCorVVA is off - starting ReCoRVVA")
                                 status = 1
 				times = 3
 				while times != 0:
@@ -120,7 +120,7 @@ class Switch (threading.Thread):
                                 Temp().start()
 
                         if(GPIO.input(11) == False and status == 1):
-                                print("switch OFF and recorvva on - killing ReCoRVVA")
+                                print("switch OFF and ReCoRVVA on - killing ReCoRVVA")
 				status = 0
 				times = 5
 				while times != 0:
