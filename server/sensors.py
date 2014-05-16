@@ -55,8 +55,8 @@ class Ping (threading.Thread):
                         distance = timepassed * 17000
 
 			last3.append(distance)
-			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
-#			mean = numpy.mean(last3)	     # --|
+			avg = round(sum(last3) / len(last3)) # --| FA:which one? avg seems to be more reliable
+#			mean = numpy.mean(last3)	     # --| BJ:Yes keep with avg, it's manual and we have more control
 
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
