@@ -65,14 +65,14 @@ class Ping (threading.Thread):
 		        pingfile.close()
 
                         if distance > 10 or avg > 10:
-	#			sys.stdout.write("[PING]  No obstructions: %.1f" % avg + "cms\r")
-	#			sys.stdout.flush()
 				print colored("[PING]  No obstructions: %.1f" % avg + "cms\r", 'green')
+				if comms.test_conn() == True:
+					comms.sendToUI("[PING]  No obstructions: %.1f" % avg + "cms\r")
 			else:
-	#			sys.stdout.write("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r")
-	#			sys.stdout.flush()
 				print colored("[PING]  PAY ATTENTION: %.1f" % avg + "cms\r", 'red')
-				motors.stop()
+				if comms.test_conn() == True:
+					comms.sendToUI("[PING]  PAY ATTENTION: %.1f" % avg)
+					motors.stop()
 
 ############################################ Temperature sensor thread ####################################################
 
@@ -87,6 +87,8 @@ class Temp (threading.Thread):
 #				sys.stdout.write("\r[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h)
 #				sys.stdout.flush()
 				print colored("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h), 'green')
+				if comms.test_conn() == True:
+					comms.sendToUI("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h))
 				dhtfile_t = open('/var/www/crest/dhtfile_t.txt', 'w')
 				dhtfile_t.write(str(t) + "*C")
 				dhtfile_t.close()
@@ -95,8 +97,12 @@ class Temp (threading.Thread):
 				dhtfile_h.close()
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
+					if comms.test_conn() == True:
+						comms.sendToUI("TEMPERATURE went above 50*C - help!\r")
 				if h > 50:
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
+					if comms.test_conn() == True:
+						comms.sendToUI("HUMIDITY went above 50 - it's gonna rain!\r")
 			else:
 				time.sleep(3)
 

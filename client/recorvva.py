@@ -93,9 +93,6 @@ def send_msg(msg):
 	except Exception, e:
 		print colored("Could not send message: " + str(e), 'red')
 
-def get_data():
-	data_thread().start()
-
 def stop_data():
 	data_thread()._Thread__stop()
 
@@ -105,7 +102,7 @@ class test_connection_thread (threading.Thread):
 			test_conn()
 			time.sleep(1)
 
-class data_thread (threading.Thread):
+class data_thread(threading.Thread):
         def run (self):
 		while True:
 			try:
@@ -114,3 +111,6 @@ class data_thread (threading.Thread):
 					print colored("\n<SERVER> " + recv_data, 'red')
 			except Exception, e:
 				print colored("Could not get data: " + str(e), 'blue')
+
+def get_data():
+        data_thread().start()
