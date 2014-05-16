@@ -55,13 +55,10 @@ class Ping (threading.Thread):
                         distance = timepassed * 17000
 
 			last3.append(distance)
-<<<<<<< HEAD
 			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
 #			mean = numpy.mean(last3)	     # --|
-=======
 			avg = round(sum(last3) / len(last3)) # --| FA:which one? avg seems to be more reliable
 #			mean = numpy.mean(last3)	     # --| BJ:Yes keep with avg, it's manual and we have more control
->>>>>>> 15e8314d666f1acd5c0d95d26c4d5ff47e53f3b3
 
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
@@ -103,21 +100,15 @@ class Temp (threading.Thread):
 			else:
 				time.sleep(3)
 
-<<<<<<< HEAD
-=======
 ############################################# Server switch thread ##########################################################
 
->>>>>>> 15e8314d666f1acd5c0d95d26c4d5ff47e53f3b3
 class Switch (threading.Thread):
         def run (self):
                 global status
                 while True:
                         if(GPIO.input(11) == True and status == 0):
-<<<<<<< HEAD
                                 print("switch ON and recorvva is off - starting ReCoRVVA")
-=======
                                 print("switch ON and ReCorVVA is off - starting ReCoRVVA")
->>>>>>> 15e8314d666f1acd5c0d95d26c4d5ff47e53f3b3
                                 status = 1
 				times = 3
 				while times != 0:
@@ -132,11 +123,8 @@ class Switch (threading.Thread):
                                 Temp().start()
 
                         if(GPIO.input(11) == False and status == 1):
-<<<<<<< HEAD
                                 print("switch OFF and recorvva on - killing ReCoRVVA")
-=======
                                 print("switch OFF and ReCoRVVA on - killing ReCoRVVA")
->>>>>>> 15e8314d666f1acd5c0d95d26c4d5ff47e53f3b3
 				status = 0
 				times = 5
 				while times != 0:
