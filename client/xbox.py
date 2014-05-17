@@ -14,8 +14,8 @@ recorvva.connect()
 class Xbox (threading.Thread):
 	def run (self):
 		for event in xbox_read.event_stream(deadzone=12000):
+                        event = str(event)
                         event = event.replace("Event", "")
-			event = str(event)
                         eventSplit = event.split(',')
                         what = eventSplit[0]
                         2nd = eventSplit[1]
