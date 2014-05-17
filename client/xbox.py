@@ -15,12 +15,7 @@ class Xbox (threading.Thread):
 	def run (self):
 		for event in xbox_read.event_stream(deadzone=12000):
                         event = str(event)
-                        event = event.replace("Event", "")
-                        eventSplit = event.split(',')
-                        what = eventSplit[0]
-                        2nd = eventSplit[1]
-                        3rd = eventSplit[2]
-                        print("event that's been split: " + eventSplit)
+                        event = event.replace("Event","")
 
 			print colored(event,'red')
 			if event == "(Y,1,0)":
