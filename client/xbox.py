@@ -16,6 +16,12 @@ class Xbox (threading.Thread):
 		for event in xbox_read.event_stream(deadzone=12000):
                         event = event.replace("Event", "")
 			event = str(event)
+                        eventSplit = event.split(',')
+                        what = eventSplit[0]
+                        2nd = eventSplit[1]
+                        3rd = eventSplit[2]
+                        print("event that's been split: " + eventSplit)
+
 			print colored(event,'red')
 			if event == "(Y,1,0)":
 				print("you pressed Y")
@@ -121,3 +127,4 @@ while True:
 	print("Sending: " + input)
 	recorvva.send_msg(input)
 
+P
