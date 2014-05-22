@@ -1,4 +1,0 @@
-This is a Python package for the ReCoRVVA server
-
-After unpacking this file from the tarball, install the required module 'termcolor':
-python install_termcolor.py
