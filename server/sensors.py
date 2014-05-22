@@ -13,6 +13,8 @@ from collections import deque
 import RPi.GPIO as GPIO
 from random import randrange
 
+os.system('sudo pigpiod')
+
 trig = 24 # gpio 7
 echo = 26 # gpio 8
 
