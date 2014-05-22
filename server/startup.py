@@ -32,7 +32,7 @@ def start():
 	print colored("Leaving time for camera warmup, please wait", 'red')
 	time.sleep(1)
 
-#Start Sensors and Communication threads
-#comms.Comms().start()
-#sensors.Ping().start()
-#sensors.Temp().start()
+	#Start Sensors and Communication threads
+	comms.Comms().start()
+	sensors.Ping().start()
+	sensors.Temp().start()

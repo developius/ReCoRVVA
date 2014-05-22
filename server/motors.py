@@ -6,9 +6,11 @@
 #---------------------------------------------------------------------------------------------------------+
 
 import RPi.GPIO as GPIO
+from RPi.GPIO import output as drive
 from termcolor import colored
 import time, comms
 
+# setup the pins!
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 Pin1 = 22  # right 1, gp pin 25, no 22
@@ -20,40 +22,41 @@ GPIO.setup(Pin2, GPIO.OUT)
 GPIO.setup(Pin3, GPIO.OUT)
 GPIO.setup(Pin4, GPIO.OUT)
 
-def drive(pin,state):
-        GPIO.output(pin,state)
+# our drive function
+#def drive(pin,state):
+#        GPIO.output(pin,state)
 
-def stop():
+def stop(): # our stop function!
         drive(Pin1, False)
         drive(Pin2, False)
         drive(Pin3, False)
         drive(Pin4, False)
 
-def backwards():
+def backwards(): # our backwards function!
 	drive(Pin1, True)
 	drive(Pin2, False)
 	drive(Pin3, True)
 	drive(Pin4, False)
 
-def forwards():
+def forwards(): # our forwards function!
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, False)
 	drive(Pin4, True)
 
-def right():
+def right(): # our right function!
 	drive(Pin1, True)
         drive(Pin2, False)
         drive(Pin3, False)
         drive(Pin4, True)
 
-def left():
+def left(): # our left function!
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, True)
 	drive(Pin4, False)
 
-def move(d):
+def move(d): # this is called from comms when a cmd is received
 	if (d == "F") or (d == "W"):
 		forwards()
 		comms.sendToUI("Received Forwards")

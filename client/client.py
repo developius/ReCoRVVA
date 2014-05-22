@@ -5,17 +5,17 @@
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk)                                                              |
 #---------------------------------------------------------------------------------------------------------+
 
-import recorvva
+import recorvva, os
 
-recorvva.connect()
+recorvva.connect() # connect to ReCoRVVA!
 
-recorvva.get_data()
+recorvva.get_data() # let's have the data back from the server :)
 
 while True:
-	print(recorvva.test_conn())
-	input = raw_input("<CLIENT> ")
+	input = raw_input("<CLIENT> ") # get user's input...
 	if input == "exit":
 		break
-	recorvva.send_msg(input)
+	recorvva.send_msg(input) # ...and send it to the server!
 
 recorvva.close()
+os.system('for x in `jobs -p`; do sudo kill -9 $x; done')

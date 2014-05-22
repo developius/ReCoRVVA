@@ -99,7 +99,7 @@ def get_data():
 def stop_data():
 	data_thread()._Thread__stop()
 
-class test_connection_thread (threading.Thread):
+class test_connection_thread(threading.Thread):
 	def run (self):
 		while True:
 			test_conn()
@@ -113,7 +113,7 @@ class data_thread(threading.Thread):
 				if recv_data != " " and recv_data != "":
 					print colored("\n<SERVER> " + recv_data, 'red')
 			except Exception, e:
-				print colored("Could not get data: " + str(e), 'blue')
-
+#				print colored("Could not get data: " + str(e), 'blue')
+				pass
 def get_data():
         data_thread().start()

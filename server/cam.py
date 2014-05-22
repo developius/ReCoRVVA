@@ -11,13 +11,13 @@ import RPi.GPIO as GPIO
 from pigpio import set_servo_pulsewidth as servo_mv
 import pigpio
 
-pigpio.start()
+pigpio.start() # start pigpio
 
-pan = 22
-tilt = 27
+pan = 22 # pan servo pin
+tilt = 27 # tilt servo pin
 
-pan_var = 1500
-tilt_var = 1000
+pan_var = 1500 # initially, pan centre
+tilt_var = 1000 # initially, tilt forwards
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -30,7 +30,7 @@ headlights = 7
 GPIO.setup(headlights, GPIO.OUT)
 GPIO.output(headlights, False)
 
-def camera(status):
+def camera(status): # gets called from comms when data is received
 	if status == "CamOn":
 		print colored("Starting camera stream", 'yellow')
 		os.system('./startstream.sh &> /dev/null')
@@ -55,34 +55,34 @@ def servo(msg):
 		pan_var = pan_var + 100
 		if pan_var < 2500 and pan_var > 500:
 			print colored("Panning left " + str(pan_var), 'yellow')
-			servo_mv(pan, pan_var)
+			servo_mv(pan, pan_var) # pan left a bit
 			comms.sendToUI("Panning left")
-		else:
+		else: # to stop trying to pan too far
 			pan_var = pan_var - 100
 
 	if msg == "pan_right":
 		pan_var = pan_var - 100
 		if pan_var < 2500 and pan_var > 500:
 	                print colored("Panning right " + str(pan_var), 'yellow')
-	                servo_mv(pan, pan_var)
+	                servo_mv(pan, pan_var) # pan right a bit
 			comms.sendToUI("Panning right")
-		else:
+		else: # to stop trying to pan too far
                         pan_var = pan_var + 100
 
 	if msg == "tilt_backwards":
 		tilt_var = tilt_var + 100
 		if tilt_var < 2500 and tilt_var > 500:
 	                print colored("Tilting backwards " + str(tilt_var), 'yellow')
-	                servo_mv(tilt, tilt_var)
+	                servo_mv(tilt, tilt_var) # tilt backwards a bit
 	                comms.sendToUI("Tilting backwards")
-		else:
+		else: # to stop tilting too far
                         tilt_var = tilt_var + 100
 
         if msg == "tilt_forwards":
 		tilt_var = tilt_var - 100
 		if tilt_var < 2500 and tilt_var > 500:
 	                print colored("Tilting forwards " + str(tilt_var), 'yellow')
-	                servo_mv(tilt, tilt_var)
+	                servo_mv(tilt, tilt_var) # tilt forwards a bit
 	                comms.sendToUI("Tilting forwards")
 		else:
                         tilt_var = tilt_var + 100

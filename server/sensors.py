@@ -5,7 +5,11 @@
 # (c) 2014 F. Anderson (finnian@fxapi.co.uk) and  B. James (musicboyben@gmail.com)	                  |
 #---------------------------------------------------------------------------------------------------------+
 
-#Import the various modules
+#Import the modules needed
+# comms for communications
+# motors for movement
+# dhtreader for the temp/humidity sensor
+
 import threading, time, comms, cam, motors, startup, socket, dhtreader, sys, os, numpy
 from termcolor import colored
 from itertools import repeat
@@ -13,35 +17,34 @@ from collections import deque
 import RPi.GPIO as GPIO
 from random import randrange
 
-os.system('sudo pigpiod')
-
 trig = 24 # gpio 7
 echo = 26 # gpio 8
 
-tempType = 11
-tempPin = 3
-dhtreader.init()
+tempType = 11 # we have a dht-11 reader
+tempPin = 3 # our GPIO pin for the data
+dhtreader.init() # start the sensor
 
+# setup the GPIOs
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 GPIO.setup(trig, GPIO.OUT)
 GPIO.setup(echo, GPIO.IN)
 GPIO.setup(tempPin, GPIO.IN)
 
-headlights = 7
-GPIO.setup(headlights, GPIO.OUT)
-GPIO.output(headlights, False)
+headlights = 7 # our GPIO pin for the headlights
+GPIO.setup(headlights, GPIO.OUT) # make the headlights pin an output
+GPIO.output(headlights, False) # turn the headlights off
 
-GPIO.setup(11, GPIO.IN)
-status = 0
+GPIO.setup(11, GPIO.IN) # input pin for switch
+status = 0 # status of the ReCoRVVA
 
-last3 = deque(maxlen=3)
+last3 = deque(maxlen=3) # storage for our ping values
 
 ############################################ Ping sensor thread ###########################################################
 
 class Ping (threading.Thread):
         def run (self):
-                while True:
+                while True: # get the ping
 			GPIO.output(trig, False)
 			time.sleep(0.25)
                         GPIO.output(trig, True)
@@ -56,10 +59,11 @@ class Ping (threading.Thread):
 
                         distance = timepassed * 17000
 
-			last3.append(distance)
+			last3.append(distance) # add the distance to the storage device
 			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
 #			mean = numpy.mean(last3)	     # --| BJ:Yes keep with avg, it's manual and we have more control
 
+			# save ping to a file on the webserver
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
 		        pingfile.close()
@@ -80,23 +84,27 @@ class Ping (threading.Thread):
 class Temp (threading.Thread):
         def run (self):
 		print colored("Starting temperature and humidity sensor", 'green')
-		while True:
+		while True: # get temp/humidity
 			temphumid = dhtreader.read(tempType, tempPin)
 			if temphumid is not None:
 				t, h = temphumid
-#				sys.stdout.write("\r[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h)
-#				sys.stdout.flush()
 				print colored("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h), 'green')
 				if comms.test_conn() == True:
 					comms.sendToUI("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h))
+
+				# save temp to a file on webserver
 				dhtfile_t = open('/var/www/crest/dhtfile_t.txt', 'w')
 				dhtfile_t.write(str(t) + "*C")
 				dhtfile_t.close()
+
+				# save humidity to a file on webserver
 				dhtfile_h = open('/var/www/crest/dhtfile_h.txt', 'w')
 				dhtfile_h.write(str(h) + "%")
 				dhtfile_h.close()
+
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
+
 				if h > 50:
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
@@ -105,7 +113,7 @@ class Temp (threading.Thread):
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
 						comms.sendToUI("HUMIDITY went above 50 - it's gonna rain!\r")
-			else:
+			else: # it didn't get anything so...
 				time.sleep(3)
 
 ############################################# Server switch thread ##########################################################
@@ -113,31 +121,27 @@ class Temp (threading.Thread):
 class Switch (threading.Thread):
         def run (self):
                 global status
-                while True:
-                        if(GPIO.input(11) == True and status == 0):
+                while True: # get the switch's status
+                        if(GPIO.input(11) == True and status == 0): # if switch is on and ReCoRVVA status is off:
                                 print("switch ON and ReCoRVVA is off - starting ReCoRVVA")
                                 status = 1
 				times = 3
-				while times != 0:
+				while times != 0: # flash headlights 3 times
 				        GPIO.output(headlights, True)
 				        time.sleep(0.25)
 				        GPIO.output(headlights, False)
 				        time.sleep(0.25)
 				        times = times - 1
-				startup.start()
-                                comms.Comms().start()
-                                Ping().start()
-                                Temp().start()
+				startup.start() # start the startup routine
 
-                        if(GPIO.input(11) == False and status == 1):
+                        if(GPIO.input(11) == False and status == 1): # if switch is off and ReCoRVVA status is on:
                                 print("switch OFF and ReCoRVVA on - killing ReCoRVVA")
 				status = 0
 				times = 5
-				while times != 0:
+				while times != 0: # flash headlights 5 times
                                         GPIO.output(headlights, True)
                                         time.sleep(0.25)
                                         GPIO.output(headlights, False)
                                         time.sleep(0.25)
                                         times = times - 1
-				os.system("for x in `jobs -p`; do sudo kill -9 $x; done; sudo killall python")
-                                sys.exit()
+				os.system("for x in `jobs -p`; do sudo kill -9 $x; done; sudo killall python") # kill everything
