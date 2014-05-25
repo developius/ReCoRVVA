@@ -33,24 +33,28 @@ def stop(): # our stop function!
         drive(Pin4, False)
 
 def backwards(): # our backwards function!
+	stop()
 	drive(Pin1, True)
 	drive(Pin2, False)
 	drive(Pin3, True)
 	drive(Pin4, False)
 
 def forwards(): # our forwards function!
+	stop()
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, False)
 	drive(Pin4, True)
 
 def right(): # our right function!
+	stop()
 	drive(Pin1, True)
         drive(Pin2, False)
         drive(Pin3, False)
         drive(Pin4, True)
 
 def left(): # our left function!
+	stop()
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, True)

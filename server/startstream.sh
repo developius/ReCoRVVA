@@ -19,4 +19,4 @@ echo -e "\nStarting raspistill..."
 raspistill --nopreview -w 320 -h 240 -q 50 -o /tmp/stream/pic.jpg -tl 100 -t 9999999 -th 0:0:0 &> /dev/null &
 
 echo -e "\nStarting stream on http://fxapi:8080. Direct stream is on fxapi:8080/?action=stream\n"
-LD_LIBRARY_PATH=/usr/local/lib mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /usr/local/www" &>/dev/null &
+LD_LIBRARY_PATH=/usr/local/lib mjpg_streamer -i "input_file.so -f /tmp/stream -n pic.jpg" -o "output_http.so -w /usr/local/www" &> /dev/null &

@@ -44,6 +44,7 @@ last3 = deque(maxlen=3) # storage for our ping values
 
 class Ping (threading.Thread):
         def run (self):
+	        print colored("Starting ping sensor", 'green')
                 while True: # get the ping
 			GPIO.output(trig, False)
 			time.sleep(0.25)
