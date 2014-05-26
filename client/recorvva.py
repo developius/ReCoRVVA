@@ -83,7 +83,6 @@ def test_conn():
 
 def close():
 	print colored("\nDisconnecting from ReCoRVVA", 'blue')
-	client_socket.shutdown(0)
 	client_socket.close()
 
 def send_msg(msg):

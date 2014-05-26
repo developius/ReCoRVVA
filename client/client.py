@@ -14,8 +14,8 @@ recorvva.get_data() # let's have the data back from the server :)
 while True:
 	input = raw_input("<CLIENT> ") # get user's input...
 	if input == "exit":
+		recorvva.close()
 		break
 	recorvva.send_msg(input) # ...and send it to the server!
 
-recorvva.close()
 os.system('for x in `jobs -p`; do sudo kill -9 $x; done')
