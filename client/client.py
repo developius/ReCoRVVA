@@ -18,4 +18,4 @@ while True:
 		break
 	recorvva.send_msg(input) # ...and send it to the server!
 
-os.system('for x in `jobs -p`; do sudo kill -9 $x; done')
+os.system('sudo killall -9 python')
