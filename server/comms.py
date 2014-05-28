@@ -75,7 +75,7 @@ class Comms (threading.Thread):
 				while True:
 					if client_socket is not None:
 	        	                        recv_data = client_socket.recv(2048) # get data
-						if not recv_data or client_socket.recv() == 0:
+						if not recv_data: #or client_socket.recv(1024) == 0:
 							print colored("Client %s disconnected" % host, 'red')
 							client_socket.close()
 			                                break
