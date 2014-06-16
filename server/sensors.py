@@ -106,16 +106,12 @@ class Temp (threading.Thread):
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
 					motors.stop()
-				if h > 50:
-					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
+				if h == 100:
+					print colored("HUMIDITY is 100% - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
-						comms.sendToUI("TEMPERATURE went above 50*C - help!\r")
-				if h > 50:
-					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
-					if comms.test_conn() == True:
-						comms.sendToUI("HUMIDITY went above 50 - it's gonna rain!\r")
+						comms.sendToUI("HUMIDITY is 100%  - it's gonna rain!\r")
 			else: # it didn't get anything so...
-				time.sleep(3)
+#				time.sleep(3)
 
 ############################################# Server switch thread ##########################################################
 
