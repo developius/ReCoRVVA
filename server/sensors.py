@@ -110,7 +110,7 @@ class Temp (threading.Thread):
 					print colored("HUMIDITY is 100% - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
 						comms.sendToUI("HUMIDITY is 100%  - it's gonna rain!\r")
-			else: # it didn't get anything so...
+			#else: # it didn't get anything so...
 #				time.sleep(3)
 
 ############################################# Server switch thread ##########################################################

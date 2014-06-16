@@ -54,17 +54,17 @@ class Comms (threading.Thread):
 
 		while True:
 			client_socket, addr = server_socket.accept() # when connection received, split it into socket addr and internet addr
-   		        hostIP = addr[0] # get the host's ip
-                	port = addr[1] # get the host's port
+	  		clientIP = addr[0] # get the client's ip
+                	port = addr[1] # get the client's port
 
                 	try: # try to get the hostname from the ip
-                        	host = gethostbyaddr(hostIP)[0]
+                        	clientHostname = gethostbyaddr(clientIP)[0]
                 	except: # do our best
-                        	host = hostIP
-                	print colored("Got connection from: " + host, 'blue')
+                        	clientHostname = clientIP
+                	print colored("Got connection from: " + clientHostname, 'blue')
 
-			if (host not in authorised_addresses): # test to see if it's an authorised connection
-				print colored("Unauthorised connection attempted - " + str(host) + " - closing their socket", 'red')
+			if (clientHostname not in authorised_addresses): # test to see if it's an authorised connection
+				print colored("Unauthorised connection attempted - " + str(clientHostname) + " - closing their socket", 'red')
 				client_socket.send("You are not authorised to connect - sorry. Go die in a hole.")
 				client_socket.close() # close their socket
 				client_socket = None
@@ -74,10 +74,12 @@ class Comms (threading.Thread):
 
 				while True:
 					if client_socket is not None:
-	        	                        recv_data = client_socket.recv(2048) # get data
-						if not recv_data: #or client_socket.recv(1024) == 0:
-							print colored("Client %s disconnected" % host, 'red')
+						try:
+		        	                        recv_data = client_socket.recv(2048) # get data
+						except:
+							print colored("Client %s disconnected" % clientHostname, 'red')
 							client_socket.close()
+							client_socket = None
 			                                break
 
 						if (recv_data in CMDS) == True: # if it's a command
@@ -91,7 +93,7 @@ class Comms (threading.Thread):
 							pass
 
 						if recv_data not in CMDS: # if it's not any of the above, it's something else and we may need to know what
-#							print colored("Received: '" + recv_data + "' from '" + str(host) + "'", 'blue')
-							pass
-			elif client_socket is None: #or test_conn == False:
-                                print colored("Client %s disconnected" % host, 'red')
+							print colored("Received: '" + recv_data + "' from '" + str(clientHostname) + "'", 'blue')
+							client_socket.send("Unrecognised command")
+			elif client_socket is None:
+                                print colored("Client %s disconnected" % clientHostname, 'red')
