@@ -105,7 +105,7 @@ class Temp (threading.Thread):
 
 				if t > 50:
 					print colored("TEMPERATURE went above 50*C - help!\r", 'red')
-
+					motors.stop()
 				if h > 50:
 					print colored("HUMIDITY went above 50 - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
