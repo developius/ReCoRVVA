@@ -29,7 +29,7 @@ def help():
 	print colored("stop_data()	- stops the data output", 'yellow')
 
 def api_version():
-	print colored("The API version is '1'", 'blue')
+	print colored("The wrapper version is '2'", 'blue')
 
 def commands():
 	print colored("Valid commands:", 'red')
