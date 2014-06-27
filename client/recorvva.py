@@ -53,24 +53,23 @@ def connect():
 	global address
 	try:
 		client_socket.connect((fxapi))
-	except Exception, e:
+	except error, e:
 		print colored("'" + str(fxapi) + "' as address failed", 'red')
 		try:
 	                client_socket.connect((vpn))
-		except Exception, e:
-			print colored("'" + str(vpn) + "' (VPN) as address failed" , 'red')
-			print colored("Could not connect to ReCoRVVA",'red')
-			#client_socket.close()
-			return False
+                except error, e:
+                        print colored("'" + str(vpn) + "' (VPN) as address failed" , 'red')
+                        print colored("Could not connect to ReCoRVVA",'red')
+                        return False
 
-                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue')
+                print colored("Connected to ReCoRVVA on " + str(vpn), 'blue') 
                 address = vpn
-		test_connection_thread().start()
-		return True
+                test_connection_thread().start()
+                return True
 
         print colored("Connected to ReCoRVVA on " + str(fxapi), 'blue')
         address = fxapi
-	test_connection_thread().start()
+        test_connection_thread().start()
 	return True
 
 def test_conn():

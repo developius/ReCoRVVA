@@ -8,6 +8,8 @@
 from socket import *
 import sys, select, threading, motors, cam, os
 from termcolor import colored
+from subprocess import Popen, PIPE
+import re
 
 # define our address ('' means all available addresses) and port (7777)
 address = ('', 7777)
@@ -20,7 +22,8 @@ client_socket = None
 # available commands
 CMDS = ["A","L","D","R","W","F","X","B","S","Stop","CamOn","CamOff","pan_left","pan_right","pan_center","tilt_forwards","tilt_backwards","tilt_up","HH","HL"]
 # what it says on the tin
-authorised_addresses = ["fxapi.home", "fxapi.local", "pimine.home", "pimine.local", "25.110.219.165", "Xav'sPad", "snail.local"]
+authorised_hostnames = ["fxapi.home", "localhost", "fxapi.local", "pimine.home", "pimine.local", "25.110.219.165", "Xav'sPad", "snail.local"]
+authorised_macs = []
 
 def sendToUI(msg): # function for sending to client's socket
 	if client_socket is not None:
@@ -56,6 +59,11 @@ class Comms (threading.Thread):
 			client_socket, addr = server_socket.accept() # when connection received, split it into socket addr and internet addr
 	  		clientIP = addr[0] # get the client's ip
                 	port = addr[1] # get the client's port
+			print clientIP
+
+#			pid = Popen(["arp", "-n", clientIP], stdout=PIPE)
+#                        s = pid.communicate()[0]
+#                        clientMAC = re.search(r"(([a-f\d]{1,2}\:){5}[a-f\d]{1,22})", s).groups()[0] # get the MAC
 
                 	try: # try to get the hostname from the ip
                         	clientHostname = gethostbyaddr(clientIP)[0]
@@ -63,7 +71,7 @@ class Comms (threading.Thread):
                         	clientHostname = clientIP
                 	print colored("Got connection from: " + clientHostname, 'blue')
 
-			if (clientHostname not in authorised_addresses): # test to see if it's an authorised connection
+			if (clientHostname not in authorised_hostnames): #or clientMAC not in authorised_macs): # test to see if it's an authorised connection
 				print colored("Unauthorised connection attempted - " + str(clientHostname) + " - closing their socket", 'red')
 				client_socket.send("You are not authorised to connect - sorry. Go die in a hole.")
 				client_socket.close() # close their socket
