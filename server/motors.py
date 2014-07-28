@@ -17,6 +17,10 @@ Pin1 = 22  # right 1, gp pin 25, no 22
 Pin2 = 18  # right 2, gp pin 24, no 18
 Pin3 = 12  # left 1, gp pin 18, no 12
 Pin4 = 16  # left 2, gp pin 23, no 16
+"""Pin1 = 18
+Pin2 = 22
+Pin3 = 16
+Pin4 = 12"""
 GPIO.setup(Pin1, GPIO.OUT)
 GPIO.setup(Pin2, GPIO.OUT)
 GPIO.setup(Pin3, GPIO.OUT)
@@ -33,28 +37,28 @@ def stop(): # our stop function!
         drive(Pin4, False)
 
 def backwards(): # our backwards function!
-	stop()
+#	stop()
 	drive(Pin1, True)
 	drive(Pin2, False)
 	drive(Pin3, True)
 	drive(Pin4, False)
 
 def forwards(): # our forwards function!
-	stop()
+#	stop()
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, False)
 	drive(Pin4, True)
 
 def right(): # our right function!
-	stop()
+#	stop()
 	drive(Pin1, True)
         drive(Pin2, False)
         drive(Pin3, False)
         drive(Pin4, True)
 
 def left(): # our left function!
-	stop()
+#	stop()
 	drive(Pin1, False)
 	drive(Pin2, True)
 	drive(Pin3, True)
