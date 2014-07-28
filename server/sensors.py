@@ -61,13 +61,13 @@ class Ping (threading.Thread):
                         distance = timepassed * 17000
 
 			last3.append(distance) # add the distance to the storage device
-			avg = round(sum(last3) / len(last3)) # --| which one? avg seems to be more reliable
-#			mean = numpy.mean(last3)	     # --| BJ:Yes keep with avg, it's manual and we have more control
+			avg = round(sum(last3) / len(last3))
+#			mean = numpy.mean(last3)
 
-			# save ping to a file on the webserver
+			"""# save ping to a file on the webserver for visual representations
 			pingfile = open('/var/www/crest/pingfile.txt', 'w')
        			pingfile.write(str(avg))
-		        pingfile.close()
+		        pingfile.close()"""
 
                         if distance > 10 or avg > 10:
 				print colored("[PING]  No obstructions: %.1f" % avg + "cms\r", 'green')
@@ -87,7 +87,7 @@ class Temp (threading.Thread):
 		print colored("Starting temperature and humidity sensor", 'green')
 		while True: # get temp/humidity
 			temphumid = dhtreader.read(tempType, tempPin)
-			if temphumid is not None:
+			while temphumid is not None:
 				t, h = temphumid
 				print colored("[DHT]   Temp: {0} *C, Hum: {1} %\r".format(t, h), 'green')
 				if comms.test_conn() == True:
@@ -110,8 +110,7 @@ class Temp (threading.Thread):
 					print colored("HUMIDITY is 100% - it's gonna rain!\r", 'red')
 					if comms.test_conn() == True:
 						comms.sendToUI("HUMIDITY is 100%  - it's gonna rain!\r")
-			#else: # it didn't get anything so...
-#				time.sleep(3)
+				time.sleep(1)
 
 ############################################# Server switch thread ##########################################################
 
@@ -142,3 +141,4 @@ class Switch (threading.Thread):
                                         time.sleep(0.25)
                                         times = times - 1
 				os.system("for x in `jobs -p`; do sudo kill -9 $x; done; sudo killall python") # kill everything
+

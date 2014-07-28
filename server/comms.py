@@ -59,7 +59,6 @@ class Comms (threading.Thread):
 			client_socket, addr = server_socket.accept() # when connection received, split it into socket addr and internet addr
 	  		clientIP = addr[0] # get the client's ip
                 	port = addr[1] # get the client's port
-			print clientIP
 
 #			pid = Popen(["arp", "-n", clientIP], stdout=PIPE)
 #                        s = pid.communicate()[0]
